@@ -1,0 +1,15 @@
+@import "tailwindcss";
+.Header h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.5rem; 
+    font-weight: 300; 
+    float: left;
+    margin-left: 5px;
+    transition: transform 0.35s ease-in-out, text-shadow 0.05s ease-in;
+    color:aliceblue;
+  }
+  .Header h1:hover
+  {
+  transform: translateY(-3px) rotate(360deg);
+  text-shadow: 3px 3px 6px rgba(255, 244, 206, 0.714);
+  }
