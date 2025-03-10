@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "flowbite/src/themes/default";
-@plugin "flowbite/plugin";
-@source "../node_modules/flowbite";
+
 
 @font-face {
   font-family: 'Formula';
@@ -20,16 +19,17 @@
 }
 
 .Header h1 {
-    font-family: Formula , Helvetica, sans-serif;
+    font-family: Formula , sans-serif;
     font-size: 2.5rem; 
     font-weight: 300; 
     float: left;
     margin-left: 5px;
-    transition: transform 0.35s ease-in-out, text-shadow 0.05s ease-in;
+    transition: transform 0.15s ease-in-out, text-shadow 0.05s ease-in;
     color:aliceblue;
   }
   .Header h1:hover
   {
+  transform: translateY(-1px);
   text-shadow: 3px 3px 6px hsla(0, 0%, 74%, 0.466);
   cursor:pointer;
   }
@@ -37,7 +37,7 @@
   .Header{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid white;
-    background: linear-gradient(to right, #8B0000, #FF0000);
+    background: linear-gradient(to right, hsl(0, 100%, 27%), hsl(0, 95%, 43%));
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
@@ -46,4 +46,25 @@
     text-align: center;
 
   }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+  }
+  
+  main {
+    flex: 1; 
+  }
+  
+  .Footer {
+    margin-top: 90%; /* Pushes the footer to the bottom */
+    font-family: Formula , sans-serif;
+  }
+  
 
