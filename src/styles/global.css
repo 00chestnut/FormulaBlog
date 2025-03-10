@@ -64,3 +64,17 @@ main {
   margin-top: 90%;
   font-family: Formula, sans-serif;
 }
+
+.BigBlock {
+  margin-top: 45%; /* This will move the div 50% from the top */
+  transform: translateY(-55%); /* This will shift it back up by 50% of its height */
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.Cage {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  height: 100vh; /* Full viewport height */
+}
