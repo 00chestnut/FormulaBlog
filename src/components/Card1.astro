@@ -1,0 +1,13 @@
+---
+const { picture, alt, name, desc } = Astro.props;
+---
+
+<div class="card">
+  <img 
+    src={picture || "https://placehold.co/150x400?text=Image+Unavailable"} 
+    alt={alt || "Unavailable"} 
+    class="cardImg"
+  />
+  <h2>{name || "Not found"}</h2>
+  <p>{desc || "Please insert data"}</p>
+</div>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "flowbite/src/themes/default";
 
+/* Fonts */
 @font-face {
   font-family: "Formula";
   src: url("/fonts/Formula1-Regular_web_0.woff2") format("woff2"),
@@ -17,33 +18,37 @@
   font-style: normal;
 }
 
-.Header h1 {
-  font-family: Formula, sans-serif;
-  font-size: 2.5rem;
-  font-weight: 300;
-  float: left;
-  margin-left: 5px;
-  transition: transform 0.15s ease-in-out, text-shadow 0.05s ease-in;
-  color: aliceblue;
-}
-.Header h1:hover {
-  transform: translateY(-1px);
-  text-shadow: 3px 3px 6px hsla(0, 0%, 74%, 0.466);
-  cursor: pointer;
-}
-
+/* Header */
 .Header {
+  position: sticky;
+  top: 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-bottom: 3px solid white;
   background: linear-gradient(to right, hsl(0, 100%, 27%), hsl(0, 95%, 43%));
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: "Formula", sans-serif;
   font-size: 2rem;
   font-weight: bold;
   padding: 20px;
   text-align: center;
 }
 
+.Header h1 {
+  font-family: Formula, sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-left: 5px;
+  transition: transform 0.15s ease-in-out, text-shadow 0.05s ease-in;
+  color: #f1f1f1;
+}
+
+.Header h1:hover {
+  transform: translateY(-1px);
+  text-shadow: 3px 3px 6px hsla(0, 0%, 74%, 0.466);
+  cursor: pointer;
+}
+
+/* Layout */
 html,
 body {
   height: 100%;
@@ -61,20 +66,91 @@ main {
 }
 
 .Footer {
-  margin-top: 90%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   font-family: Formula, sans-serif;
 }
 
+/* Disclaimer Block */
 .BigBlock {
-  margin-top: 45%; /* This will move the div 50% from the top */
-  transform: translateY(-55%); /* This will shift it back up by 50% of its height */
+  margin-top: 45%;
+  transform: translateY(-55%);
   margin-left: 20px;
   margin-right: 20px;
 }
 
+/* Grid Container */
 .Cage {
+  padding-top: 200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: flex-start;
+}
+
+/* Cards */
+.card {
+  background: hsl(0, 0%, 100%);
+  border: 1px solid hsl(0, 0%, 82%);
+  border-radius: 5px;
+  box-shadow: 5px 5px 3px hsla(0, 0%, 83%, 0.434);
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
   display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
-  height: 100vh; /* Full viewport height */
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  font-family: Cascadia, sans-serif;
+}
+
+.card button {
+  border-radius: 5px;
+  background-color: hsl(0, 100%, 23%);
+  width: 90px;
+  color: rgb(191, 191, 191);
+  font-size: 0.9rem;
+  align-self: center;
+}
+
+.card h2,
+.card p {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.card h2 {
+  color: rgb(106, 106, 106);
+  font-size: 1.25rem;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.card p {
+  margin-bottom: 10px;
+  color: rgb(191, 191, 191);
+}
+
+.card .cardImg {
+  width: 100%;
+  height: 150px;
+  padding: 0;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  .Cage {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .Cage {
+    grid-template-columns: 1fr;
+  }
 }

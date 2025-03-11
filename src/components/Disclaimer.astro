@@ -2,9 +2,7 @@
 import "../styles/global.css";
 const { title, content } = Astro.props;
 ---
-<div class="cage">
 <div class="BigBlock bg-gray-100 p-8 rounded-lg shadow-lg">
   <h2 class="text-3xl font-bold text-gray-800 mb-4">{title}</h2>
   <p class="text-lg text-gray-700" set:html={content}></p>
-</div>
 </div>
