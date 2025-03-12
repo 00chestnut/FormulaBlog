@@ -3,89 +3,45 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Card3 from "../components/Card3.astro";
-import Card1 from "../components/Card1.astro";
 import Cage from "../components/Cage.astro";
 import Search from "../components/searchbar.astro";
+import { fetchPosts } from "../scripts/scripts.js"; // Import the fetch function
+
+// Fetch posts from WordPress
+const posts = await fetchPosts();
 ---
 
 <html>
   <head>
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OnBoard - Formula 1</title>
   </head>
   <body>
     <container>
       <Header />
-      <div class="middleground">
         <main>
           <Cage>
-            <Card3
-              picture="/images/51g.jpg"
-              alt="Verstappen's 51g crash at Silverstone"
-              name="What caused Verstappen's 51g crash?"
-              desc="Deep dive into the accident"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/senna.jpeg"
-              alt="Ayrton Senna's fatal crash"
-              name="Senna's fatal crash at Imola"
-              desc="What caused the infamous accident?"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/verstappenangry.png"
-              alt="Verstappen's car fails"
-              name="Verstappen's bolide fails "
-              desc="How will the accident at Baku affect the championship?"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/51g.jpg"
-              alt="Verstappen's 51g crash at Silverstone"
-              name="What caused Verstappen's 51g crash?"
-              desc="Deep dive into the accident"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/senna.jpeg"
-              alt="Ayrton Senna's fatal crash"
-              name="Senna's fatal crash at Imola"
-              desc="What caused the infamous accident?"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/verstappenangry.png"
-              alt="Verstappen's car fails"
-              name="Verstappen's bolide fails "
-              desc="How will the accident at Baku affect the championship?"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/51g.jpg"
-              alt="Verstappen's 51g crash at Silverstone"
-              name="What caused Verstappen's 51g crash?"
-              desc="Deep dive into the accident"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/senna.jpeg"
-              alt="Ayrton Senna's fatal crash"
-              name="Senna's fatal crash at Imola"
-              desc="What caused the infamous accident?"
-              btn="Read more"
-            />
-            <Card3
-              picture="/images/verstappenangry.png"
-              alt="Verstappen's car fails"
-              name="Verstappen's bolide fails "
-              desc="How will the accident at Baku affect the championship?"
-              btn="Read more"
-            />
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <Card3
+                  picture={post.imageUrl}
+                  alt={post.title}
+                  name={post.title}
+                  desc={post.description}
+                  btn="Read more"
+                  slug={post.slug}
+                />
+              ))
+            ) : (
+              <div class="text-center w-full p-8">
+                <h3 class="text-xl font-bold">No posts found</h3>
+                <p>Check your WordPress connection or create some posts.</p>
+              </div>
+            )}
           </Cage>
         </main>
         <Footer />
-      </div>
     </container>
   </body>
 </html>
