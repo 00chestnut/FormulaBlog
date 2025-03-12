@@ -80,25 +80,44 @@ main {
   margin-right: 20px;
 }
 
-/* Grid Container */
+/* Flexbox Container */
 .Cage {
-  padding-top: 200px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  padding-bottom:200px;
+  padding-top: 100px;
+  display: flex;
+  flex-wrap: wrap; /* This is key - allows items to wrap to new rows */
   gap: 20px;
-  justify-items: center;
-  align-items: flex-start;
+  justify-content: center; /* Centers the cards horizontally */
+  max-width: 1200px; /* Controls the overall container width */
+  margin: 0 auto; /* Centers the container on the page */
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.Card3 {
+  margin-bottom: 30px;
 }
 
+
+
 /* Media Queries for Responsiveness */
+
 @media (max-width: 1024px) {
-  .Cage {
-    grid-template-columns: repeat(2, 1fr);
+  .Card3 {
+    flex: 0 0 calc(50% - 20px);
+    max-width: calc(50% - 20px);
   }
 }
 
-@media (max-width: 600px) {
+/* For very small screens like phones (including iPhone SE and others) */
+@media (max-width: 767px) {
   .Cage {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center; /* Ensures cards are centered */
+  }
+
+  .Card3 {
+    flex: 0 0 100%; /* Forces cards to take 100% of the width */
+    max-width: 100%;
+    width: 100%;
   }
 }

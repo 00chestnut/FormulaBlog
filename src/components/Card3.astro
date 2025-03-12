@@ -1,17 +1,44 @@
 ---
 const { picture, alt, name, desc, btn } = Astro.props;
 ---
-<div class="Card3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-    <a href="#"> 
-        <img class="rounded-t-lg" src={picture || "https://placehold.co/150x400?text=Image+Unavailable"} alt={alt || "Picture unavailable"} />
+<div
+  class="Card3 w-89 h-88 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col"
+>
+  <!-- Changed: Added w-80 h-96 for a fixed card size -->
+  <!-- Changed: Added flex flex-col to structure the card properly -->
+
+  <a href="#" class="h-1/2">
+    <!-- Changed: Set h-1/2 to make the image take 50% of the card height -->
+    <!-- Tweak: Adjust h-1/2 (e.g., h-2/5 or h-3/5) to modify image-to-content ratio -->
+    <img
+      class="w-full h-full object-cover rounded-t-lg"
+      src={picture || "https://placehold.co/150x400?text=Image+Unavailable"}
+      alt={alt || "Picture unavailable"}
+    />
+    <!-- Ensures image fills its container without distortion -->
+  </a>
+
+  <div class="p-5 flex flex-col h-1/2 justify-between">
+    <!-- Changed: Set h-1/2 to match the image section height -->
+    <!-- Tweak: Adjust h-1/2 (e.g., h-2/5 or h-3/5) to modify image-to-content ratio -->
+
+    <a href="#">
+      <h5
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        {name || "Not found"}
+      </h5>
     </a>
-    <div class="p-5">
-        <a href="#"> 
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{name || "Not found"}</h5>
-        </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{desc || "Please enter data"}</p>
-        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-            {btn || "Article unavailable"}
-        </a>
-    </div>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      {desc || "Please enter data"}
+    </p>
+
+    <a
+      href="#"
+      class="inline-flex items-center w-auto px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+    >
+      {btn || "Article unavailable"}
+    </a>
+    <!-- Restored: Kept original button styling and SVG -->
+  </div>
 </div>
