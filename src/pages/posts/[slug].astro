@@ -8,9 +8,10 @@ import Footer from "../../components/Footer.astro";
 const { slug } = Astro.params;
 
 // Fetch the specific post based on the slug
+//@ts-ignore
 async function getPostBySlug(slug) {
   try {
-    const response = await fetch(`https://your-wordpress-site.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
+    const response = await fetch(`http://maks.z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?slug=${slug}&_embed`);
     
     if (!response.ok) {
       throw new Error(`Error fetching post: ${response.status}`);
