@@ -7,6 +7,14 @@ import Footer from "../../components/Footer.astro";
 // Get the slug from the URL parameters
 const { slug } = Astro.params;
 
+// Helper function to decode HTML entities
+//@ts-ignore
+function decodeHTMLEntities(text) {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+}
+
 // Fetch the specific post based on the slug
 //@ts-ignore
 async function getPostBySlug(slug) {
@@ -30,9 +38,12 @@ async function getPostBySlug(slug) {
     const featuredImageUrl = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 
                              "https://placehold.co/800x400?text=Image+Unavailable";
     
+    // Fix encoded characters in the title
+    const decodedTitle = decodeHTMLEntities(post.title.rendered);
+    
     return {
       id: post.id,
-      title: post.title.rendered,
+      title: decodedTitle,
       content: post.content.rendered,
       imageUrl: featuredImageUrl,
       date: new Date(post.date).toLocaleDateString()
