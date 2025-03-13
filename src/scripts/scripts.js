@@ -1,3 +1,23 @@
+// In scripts.js
+export function decodeHTMLEntities(text) {
+  if (!text) return '';
+  
+  return text
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&rsquo;/g, "'")
+    .replace(/&lsquo;/g, "'")
+    .replace(/&rdquo;/g, '"')
+    .replace(/&ldquo;/g, '"')
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
+}
+
 export async function fetchPosts() {
   try {
     // Replace with your actual WordPress URL
@@ -26,11 +46,15 @@ export async function fetchPosts() {
       excerpt =
         excerpt.length > 70 ? excerpt.substring(0, 70) + "..." : excerpt;
 
+      // Get full content for the post page
+      const content = post.content.rendered;
+
       return {
         id: post.id,
         slug: post.slug,
         title: post.title.rendered,
         description: excerpt,
+        content: content,
         imageUrl: featuredImageUrl,
         date: new Date(post.date).toLocaleDateString(),
       };

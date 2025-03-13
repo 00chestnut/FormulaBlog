@@ -2,10 +2,10 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Card3 from "../components/Card3.astro";
+import Card2 from "../components/Card2.astro";
 import Cage from "../components/Cage.astro";
 import Search from "../components/searchbar.astro";
-import { fetchPosts } from "../scripts/scripts.js"; // Import the fetch function
+import { fetchPosts } from "../scripts/scripts.js"; 
 
 // Fetch posts from WordPress
 const posts = await fetchPosts();
@@ -23,8 +23,9 @@ const posts = await fetchPosts();
         <main>
           <Cage>
             {posts.length > 0 ? (
-              posts.map((post) => (
-                <Card3
+              //@ts-ignore
+              posts.map((post) => (     // (post marks an error because it is not declared as an astro prop?)
+                <Card2
                   picture={post.imageUrl}
                   alt={post.title}
                   name={post.title}
