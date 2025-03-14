@@ -8,7 +8,7 @@ import { fetchPosts, decodeHTMLEntities } from "../../scripts/scripts.js";
 // This is required for dynamic routes in Astro
 export async function getStaticPaths() {
   const posts = await fetchPosts();
-//@ts-ignore
+  //@ts-ignore
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -23,6 +23,13 @@ const { post } = Astro.props;
   <head>
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="description" content="A blog about Formula 1.">
+    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard">
+    <meta name="author" content="00chestnut">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="OnBoard - Formula1">
+    <meta property="og:description" content="A blog about Formula 1.">
     <!--@ts-ignore -->
     <title>{decodeHTMLEntities(post.title)} - OnBoard Formula 1</title>
   </head>
@@ -36,7 +43,8 @@ const { post } = Astro.props;
             src={post.imageUrl}
             alt={decodeHTMLEntities(post.title)}
             class="w-full aspect-[16/9] md:h-[500px] object-cover object-bottom"
-          /> <!--Image above title (could be replaced in the future with a local banner!) -->
+          />
+          <!--Image above title (could be replaced in the future with a local banner!) -->
 
           <div class="p-6">
             <!--@ts-ignore -->
@@ -47,11 +55,11 @@ const { post } = Astro.props;
             <!--@ts-ignore -->
             <div class="text-gray-500 mb-4">Published on {post.date}</div>
             <!--@ts-ignore -->
-            <div class="Content prose max-w-none" set:html={(post.content)} />
+            <div class="Content prose max-w-none" set:html={post.content} />
           </div>
         </article>
         <!--@ts-ignore -->
-        <div class="text-gray-300 text-xs object-bottom" set:html={(post.tags)}>
+        <div class="Fragment text-gray-300 text-xs object-bottom" set:html={post.tags}>
           <h6>Tags:</h6>
         </div>
       </main>
@@ -59,3 +67,10 @@ const { post } = Astro.props;
     </container>
   </body>
 </html>
+
+
+<style>
+  .Fragment{
+    gap:20px;
+  }
+</style>

@@ -5,7 +5,14 @@ import { decodeHTMLEntities } from "../scripts/scripts.js";
 const articleUrl = slug ? `/posts/${slug}` : "/404";
 const decodedName = name ? decodeHTMLEntities(name) : "Not found";
 ---
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="description" content="A blog about Formula 1.">
+<meta name="keywords" content="Formula 1, Blog, F1, OnBoard">
+<meta name="author" content="00chestnut">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="OnBoard - Formula1">
+<meta property="og:description" content="A blog about Formula 1.">
 <div
   class="Card3 w-90 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col"
 >
