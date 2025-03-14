@@ -1,6 +1,5 @@
 export function decodeHTMLEntities(text) {
   if (!text) return '';
-  
   return text
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
@@ -15,9 +14,8 @@ export function decodeHTMLEntities(text) {
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
-    .replace(/&#8211;/g, '-');
+    .replace(/&#8211;/g, '-')
 } // life changing
-
 export async function fetchPosts() {
   try {
     const response = await fetch(
@@ -27,7 +25,7 @@ export async function fetchPosts() {
     if (!response.ok) {
       throw new Error(`Error fetching posts: ${response.status}`);
     }
-
+  
     const posts = await response.json();
 
     return posts.map((post) => {
@@ -38,12 +36,11 @@ export async function fetchPosts() {
 
       // Get the excerpt (short description) and clean it up
       let excerpt = decodeHTMLEntities(post.excerpt.rendered);
-      // Remove HTML tags
       excerpt = excerpt.replace(/<\/?[^>]+(>|$)/g, "");
-      // Limit to a reasonable length
       excerpt =
         excerpt.length > 120 ? excerpt.substring(0, 120) + "..." : excerpt;
-
+      //tags
+      const tags = post._embedded?.["wp:term"]?.[1]?.map(tag => tag.name).join(", ") || "";
       // full content 
       return {
         id: post.id,
@@ -53,6 +50,7 @@ export async function fetchPosts() {
         content: post.content.rendered,
         imageUrl: featuredImageUrl,
         date: new Date(post.date).toLocaleDateString(),
+        tags: tags,
       };
     });
   } catch (error) {

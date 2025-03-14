@@ -50,6 +50,10 @@ const { post } = Astro.props;
             <div class="Content prose max-w-none" set:html={(post.content)} />
           </div>
         </article>
+        <!--@ts-ignore -->
+        <div class="text-gray-300 text-xs object-bottom" set:html={(post.tags)}>
+          <h6>Tags:</h6>
+        </div>
       </main>
       <Footer />
     </container>
