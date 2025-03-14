@@ -69,8 +69,11 @@ const { post } = Astro.props;
 </html>
 
 
-<style>
+<style is:global>
   .Fragment{
     gap:20px;
+  }
+  .Content h1{
+    font-size: 2rem;
   }
 </style>
