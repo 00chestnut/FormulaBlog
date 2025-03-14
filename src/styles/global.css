@@ -64,6 +64,14 @@ body {
 main {
   flex: 1;
 }
+.Animated{
+  transition: 0.25s ease-in-out;
+}
+.Animated:hover{
+  transition: 0.3s ease-in-out;
+  transform: scale(1.125);
+  overflow:hidden;
+}
 
 .Footer {
   position: fixed;
