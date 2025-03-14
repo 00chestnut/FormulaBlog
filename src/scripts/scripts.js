@@ -51,7 +51,7 @@ export async function fetchPosts() {
         imageUrl: featuredImageUrl,
         date: new Date(post.date).toLocaleDateString(),
         tags: tags,
-      };
+      }; // test comment
     });
   } catch (error) {
     console.error("Failed to fetch posts:", error);
