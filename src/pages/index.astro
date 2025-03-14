@@ -32,7 +32,7 @@ const posts = await fetchPosts();
           <Cage>
             {posts.length > 0 ? (
               //@ts-ignore
-              posts.map((post) => (     // (post marks an error because it is not declared as an astro prop?)
+              posts.map((post) => (    
                 <Card2
                   picture={post.imageUrl}
                   alt={post.title}

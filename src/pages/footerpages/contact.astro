@@ -7,17 +7,25 @@ import Disclaimer from "../../components/Disclaimer.astro";
 
 <html>
   <head>
-    <link rel="icon" type="image/svg+xml" href="../public/sf25.svg" />
+    <link rel="icon" type="image/svg+xml" href:"/sf25.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="description" content="A blog about Formula 1.">
+    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard">
+    <meta name="author" content="00chestnut">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="OnBoard - Formula1">
+    <meta property="og:description" content="A blog about Formula 1.">
     <title>OnBoard - Formula 1</title>
   </head>
   <body>
     <container>
       <Header />
       <main>
-        <div class="cage">
-          <Disclaimer
+        <div class="Cage">
+          <Disclaimer class="Disclaimer"
             title="Contact us!"
-            content='GitHub: <a href="https://github.com/00chestnut" class="hover:underline me-4 md:me-6" target="_blank" >00chestnut</a><br/>Email: 00chestnutt@gmail.com'
+            content='GitHub: <a href="https://github.com/00chestnut" class="hover:underline me-4 md:me-6" target="_blank" >00chestnut</a><br/>Email: 00chestnutt@gmail.com <br/><br/><img class="w-[15rem] h-[15rem]" alt="Shark programming (00chestnut)" src="../../../src/assets/shark.png">'
           />
           <Footer />
         </div>

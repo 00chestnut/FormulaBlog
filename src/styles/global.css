@@ -65,10 +65,10 @@ main {
   flex: 1;
 }
 .Animated{
-  transition: 0.25s ease-in-out;
+  transition: 0.3s ease-out;
 }
 .Animated:hover{
-  transition: 0.3s ease-in-out;
+  transition: 0.35s ease-out;
   transform: scale(1.125);
   overflow:hidden;
 }
@@ -81,9 +81,8 @@ main {
 }
 
 /* Disclaimer Block */
-.BigBlock {
-  margin-top: 45%;
-  transform: translateY(-55%);
+.Disclaimer {
+  object-position: center;
   margin-left: 20px;
   margin-right: 20px;
 }
