@@ -32,7 +32,7 @@ export async function fetchPosts() {
       // Get the featured image URL or fallback to a placeholder
       const featuredImageUrl =
         post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-        "https://placehold.co/150x400?text=Image+Unavailable";
+        "https://placehold.co/357x219?text=Image+Unavailable";
 
       // Get the excerpt (short description) and clean it up
       let excerpt = decodeHTMLEntities(post.excerpt.rendered);
