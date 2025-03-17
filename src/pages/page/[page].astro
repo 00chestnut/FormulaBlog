@@ -66,6 +66,16 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
                   btn="Read more"
                   slug={post.slug}
                 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
+                <Card2 />
               ))
             ) : (
             <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -89,7 +99,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             {/* First page button */}
             <a 
               href="/page/1" 
-              class={`px-3 py-2 rounded-lg ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 rounded-lg mb-12 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasPrevPage}
             >
               &lt;&lt;
@@ -98,21 +108,21 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             {/* Previous page button */}
             <a 
               href={hasPrevPage ? `/page/${currentPage - 1}` : '#'} 
-              class={`px-3 py-2 rounded-lg ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 rounded-lg mb-12 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasPrevPage}
             >
               &lt;
             </a>
             
             {/* Page indicator */}
-            <span class="px-3 py-2 font-medium">
+            <span class="px-3 py-2 font-medium mb-12">
               Page {currentPage} of {totalPages}
             </span>
             
             {/* Next page button */}
             <a 
               href={hasNextPage ? `/page/${currentPage + 1}` : '#'} 
-              class={`px-3 py-2 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 mb-12 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasNextPage}
             >
               &gt;
@@ -121,7 +131,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             {/* Last page button */}
             <a 
               href={`/page/${totalPages}`} 
-              class={`px-3 py-2 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 mb-12 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasNextPage}
             >
               &gt;&gt;
