@@ -53,7 +53,7 @@ const { post } = Astro.props;
             </h1><!--@ts-ignore -->
             <div class="text-gray-500 mb-4">Published on {post.date}</div>
             <!--@ts-ignore -->
-            <div class="Content prose max-w-none" set:html={post.content} />
+            <div class="Content prose max-w-none preserve-whitespace" set:html={post.content} />
           </div>
         </article>
         <!-- Back to all posts link -->
@@ -79,8 +79,9 @@ const { post } = Astro.props;
             </svg>
             Back to all posts
           </a>
-        </div> <!--@ts-ignore -->
-        <div class="Fragment text-gray-300 text-xs object-bottom" set:html={post.tags}>
+        </div>
+        <!--@ts-ignore -->
+        <div class="Tags text-gray-300 text-xs object-bottom" set:html={post.tags}>
           <h6>Tags:</h6>
         </div>
       </main>
@@ -91,10 +92,28 @@ const { post } = Astro.props;
 
 
 <style is:global>
-  .Fragment{
+  .Tags{
     gap:20px;
+  }
+  .Content{
+    line-height: 1.6;
   }
   .Content h1{
     font-size: 2rem;
+  }
+  .Content h2{
+    font-size: 1.5rem;
+  }
+  .Content h3{
+    font-size: 1.25rem;
+  }
+  .preserve-whitespace p {
+    white-space: pre-line;
+    margin-bottom: 1rem;
+  }
+  .preserve-whitespace br {
+    display: block;
+    content: "";
+    margin-top: 1rem;
   }
 </style>

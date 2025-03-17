@@ -69,7 +69,7 @@ main {
 }
 .Animated:hover {
   transition: 0.35s ease-out;
-  transform: scale(1.125);
+  transform: scale(1.05);
   overflow: hidden;
 }
 

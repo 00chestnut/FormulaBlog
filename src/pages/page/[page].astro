@@ -8,7 +8,7 @@ import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
   const allPosts = await fetchPosts();
-  const postsPerPage = 6; // Adjust this number based on how many posts you want per page
+  const postsPerPage = 9; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
   
   // Create an array of page numbers starting from 1
@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   
   // Return the paths for all pages
   return pages.map(page => {
-    // Calculate the slice of posts for this page
+    // Ensure correct slicing of posts per page
     const start = (page - 1) * postsPerPage;
     const end = start + postsPerPage;
     const pagePosts = allPosts.slice(start, end);
@@ -58,7 +58,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             {posts.length > 0 ? (
                 //@ts-ignore
               posts.map((post) => (    
-                <Card2
+              <Card2
                   picture={post.imageUrl}
                   alt={post.title}
                   name={post.title}
@@ -66,16 +66,6 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
                   btn="Read more"
                   slug={post.slug}
                 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
-                <Card2 />
               ))
             ) : (
             <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
