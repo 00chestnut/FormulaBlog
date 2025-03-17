@@ -5,30 +5,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found</title>
+  <title>404 - Page Not Found</title>
   <style>
+
+    @font-face {
+      font-family: "Formula";
+      src: url("/fonts/Formula1-Regular_web_0.woff2") format("woff2"),
+           url("/fonts/Formula1-Regular_web_0.woff") format("woff");
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      font-family: "Formula", Arial, sans-serif;
+      background-color: #15151E;
+      color: white;
       text-align: center;
-      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    h1 {
-      font-size: 3rem;
+
+    .container {
+      position: relative;
+      padding: 20px;
     }
-    a {
+
+    .error-code {
+      font-size: 8rem;
+      font-weight: bold;
+      color: #E10600;
+      text-shadow: 0 0 10px rgba(225, 6, 0, 0.7);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 400px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.5;
+    }
+
+    .button {
+      display: inline-block;
+      background: #E10600;
+      color: white;
+      padding: 10px 25px;
+      text-transform: uppercase;
+      font-weight: bold;
+      border-radius: 4px;
       text-decoration: none;
-      color: blue;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background: #c40000;
+      box-shadow: 0 6px 20px rgba(225, 6, 0, 0.6);
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1>404 - Page Not Found</h1>
-    <p>You might have ventured too far.</p>
-    <a href="/">Go back to OnBoard</a>
+  <div class="container">
+    <h1 class="error-code">404</h1>
+    <h2>You may have ventured too far</h2>
+    <p>This page doesn't exist.</p>
+    <a href="/" class="button">Back to OnBoard</a>
   </div>
 </body>
 </html>

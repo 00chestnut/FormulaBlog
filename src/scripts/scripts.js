@@ -19,8 +19,6 @@ export function decodeHTMLEntities(text) {
 
 export async function fetchPosts(page = 1, perPage = 100) {
   try {
-    // Use WP pagination parameters to get a specific page of posts
-    // For static generation, we'll get all posts and paginate on the frontend
     const response = await fetch(
       `http://maks.z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?_embed&per_page=${perPage}`
     );
@@ -54,7 +52,7 @@ export async function fetchPosts(page = 1, perPage = 100) {
         imageUrl: featuredImageUrl,
         date: new Date(post.date).toLocaleDateString(),
         tags: tags,
-      }; // test comment
+      };
     });
   } catch (error) {
     console.error("Failed to fetch posts:", error);
