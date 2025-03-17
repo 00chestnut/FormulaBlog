@@ -16,10 +16,13 @@ export function decodeHTMLEntities(text) {
     .replace(/&gt;/g, '>')
     .replace(/&#8211;/g, '-')
 } // life changing
-export async function fetchPosts() {
+
+export async function fetchPosts(page = 1, perPage = 100) {
   try {
+    // Use WP pagination parameters to get a specific page of posts
+    // For static generation, we'll get all posts and paginate on the frontend
     const response = await fetch(
-      "http://maks.z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?_embed"
+      `http://maks.z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?_embed&per_page=${perPage}`
     );
 
     if (!response.ok) {
@@ -32,7 +35,7 @@ export async function fetchPosts() {
       // Get the featured image URL or fallback to a placeholder
       const featuredImageUrl =
         post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-        "https://placehold.co/357x219?text=Image+Unavailable";
+        "https://placehold.co/1200x600?text=Image+Not+Featured";
 
       // Get the excerpt (short description) and clean it up
       let excerpt = decodeHTMLEntities(post.excerpt.rendered);
