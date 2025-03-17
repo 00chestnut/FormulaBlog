@@ -1,1 +1,1 @@
-#Formula 1 Blog in Astro
+Formula 1 Blog in Astro
