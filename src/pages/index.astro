@@ -47,7 +47,9 @@ export const prerender = true;
       <Header />
       <main>
         <Cage>
-          <SearchBar />
+          <div class="w-full mb-12">
+            <SearchBar />
+          </div>
           {
             firstPagePosts.length > 0 ? (
               //@ts-ignore
@@ -85,16 +87,16 @@ export const prerender = true;
                     alt="Error shark"
                   />
                 </div>
-              </div> // there is an error with this div
+              </div>
             )
           }
         </Cage>
 
         <!-- Pagination Controls -->
-        <div class="pagination flex justify-center items-center my-8 gap-2">
+        <div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
           {/* First page button - disabled on index */}
           <span
-            class="px-3 py-2 rounded-lg mb-12 bg-gray-300 text-gray-500 cursor-not-allowed"
+            class="px-3 py-2 rounded-lg mb-8 md:mb-12 bg-gray-300 text-gray-500 cursor-not-allowed"
             aria-disabled="true"
           >
             &lt;&lt;
@@ -102,21 +104,21 @@ export const prerender = true;
 
           {/* Previous page button - disabled on index */}
           <span
-            class="px-3 py-2 rounded-lg mb-12 bg-gray-300 text-gray-500 cursor-not-allowed"
+            class="px-3 py-2 rounded-lg mb-8 md:mb-12 bg-gray-300 text-gray-500 cursor-not-allowed"
             aria-disabled="true"
           >
             &lt;
           </span>
 
           {/* Page indicator */}
-          <span class="px-3 py-2 font-medium mb-12">
+          <span class="px-3 py-2 font-medium mb-8 md:mb-12">
             Page 1 of {totalPages}
           </span>
 
           {/* Next page button */}
           <a
             href={totalPages > 1 ? `/page/2` : "#"}
-            class={`px-3 py-2 mb-12 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            class={`px-3 py-2 mb-8 md:mb-12 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={totalPages <= 1}
           >
             &gt;
@@ -125,7 +127,7 @@ export const prerender = true;
           {/* Last page button */}
           <a
             href={totalPages > 1 ? `/page/${totalPages}` : "#"}
-            class={`px-3 py-2 mb-12 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            class={`px-3 py-2 mb-8 md:mb-12 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={totalPages <= 1}
           >
             &gt;&gt;

@@ -44,12 +44,12 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
-    <meta name="description" content="OnBoard - The latest news, insights and stories about Formula 1 racing. Page {currentPage} of {totalPages}.">
+    <meta name="description" content={`OnBoard - The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}>
     <meta name="keywords" content="Formula 1, Blog, F1, OnBoard, Racing, Motorsport">
     <meta name="author" content="00chestnut">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="OnBoard - Formula 1 - Page {currentPage}">
-    <meta property="og:description" content="The latest news, insights and stories about Formula 1 racing. Page {currentPage} of {totalPages}.">
+    <meta property="og:title" content={`OnBoard - Formula 1 - Page ${currentPage}`}>
+    <meta property="og:description" content={`The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}>
     <meta property="og:type" content="website">
     <meta property="og:url" content={`https://your-website.com/page/${currentPage}`}>
     <link rel="canonical" href={`https://your-website.com/page/${currentPage}`}>
@@ -62,7 +62,9 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
       <Header />
         <main>
           <Cage>
-            <SearchBar />
+            <div class="w-full mb-12">
+              <SearchBar />
+            </div>
             {posts.length > 0 ? (
                 //@ts-ignore
               posts.map((post) => (    
@@ -94,11 +96,11 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
           </Cage>
           
           <!-- Pagination Controls -->
-          <div class="pagination flex justify-center items-center my-8 gap-2">
+          <div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
             {/* First page button */}
             <a 
               href="../" 
-              class={`px-3 py-2 rounded-lg mb-12 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 rounded-lg mb-10 md:mb-15 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasPrevPage}
               aria-label="First page"
             >
@@ -108,7 +110,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             {/* Previous page button */}
             <a 
               href={currentPage === 2 ? '../' :`/page/${currentPage - 1}`} 
-              class={`px-3 py-2 rounded-lg mb-12 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 rounded-lg mb-10 md:mb-15 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasPrevPage}
               aria-label="Previous page"
             >
@@ -116,14 +118,14 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             </a>
             
             {/* Page indicator */}
-            <span class="px-3 py-2 font-medium mb-12">
+            <span class="px-3 py-2 font-medium mb-10 md:mb-15">
               Page {currentPage} of {totalPages}
             </span>
             
             {/* Next page button */}
             <a 
               href={hasNextPage ? `/page/${currentPage + 1}` : '#'} 
-              class={`px-3 py-2 mb-12 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 mb-10 md:mb-15 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasNextPage}
               aria-label="Next page"
             >
@@ -133,7 +135,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
             {/* Last page button */}
             <a 
               href={`/page/${totalPages}`} 
-              class={`px-3 py-2 mb-12 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              class={`px-3 py-2 mb-10 md:mb-15 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasNextPage}
               aria-label="Last page"
             >
