@@ -12,63 +12,83 @@ export async function getStaticPaths() {
   const allPosts = await fetchPosts();
   const postsPerPage = 3; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
-  
+
   // Create an array of page numbers starting from 1
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  
+
   // Return the paths for all pages
-  return pages.map(page => {
+  return pages.map((page) => {
     // Ensure correct slicing of posts per page
     const start = (page - 1) * postsPerPage;
     const end = start + postsPerPage;
     const pagePosts = allPosts.slice(start, end);
-    
+
     return {
       params: { page: page.toString() },
-      props: { 
+      props: {
         posts: pagePosts,
         currentPage: page,
         totalPages,
         hasNextPage: page < totalPages,
-        hasPrevPage: page > 1
-      }
+        hasPrevPage: page > 1,
+      },
     };
   });
 }
 
-const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props;
+const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
+  Astro.props;
 ---
 
 <html lang="en">
   <head>
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="UTF-8">
-    <meta name="description" content={`OnBoard - The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}>
-    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard, Racing, Motorsport">
-    <meta name="author" content="00chestnut">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content={`OnBoard - Formula 1 - Page ${currentPage}`}>
-    <meta property="og:description" content={`The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}>
-    <meta property="og:type" content="website">
-    <meta property="og:url" content={`https://your-website.com/page/${currentPage}`}>
-    <link rel="canonical" href={`https://your-website.com/page/${currentPage}`}>
-    {hasPrevPage && <link rel="prev" href={`/page/${currentPage - 1}`}>}
-    {hasNextPage && <link rel="next" href={`/page/${currentPage + 1}`}>}
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content={`OnBoard - The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}
+    />
+    <meta
+      name="keywords"
+      content="Formula 1, Blog, F1, OnBoard, Racing, Motorsport"
+    />
+    <meta name="author" content="00chestnut" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      property="og:title"
+      content={`OnBoard - Formula 1 - Page ${currentPage}`}
+    />
+    <meta
+      property="og:description"
+      content={`The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={`https://your-website.com/page/${currentPage}`}
+    />
+    <link
+      rel="canonical"
+      href={`https://your-website.com/page/${currentPage}`}
+    />
+    {hasPrevPage && <link rel="prev" href={`/page/${currentPage - 1}`} />}
+    {hasNextPage && <link rel="next" href={`/page/${currentPage + 1}`} />}
     <title>OnBoard - Formula 1 - Page {currentPage}</title>
   </head>
   <body>
     <container>
       <Header />
-        <main>
-          <Cage>
-            <div class="w-full mb-12">
-              <SearchBar />
-            </div>
-            {posts.length > 0 ? (
-                //@ts-ignore
-              posts.map((post) => (    
-              <Card2
+      <main>
+        <Cage>
+          <div class="w-full mb-12">
+            <SearchBar />
+          </div>
+          {
+            posts.length > 0 ? (
+              //@ts-ignore
+              posts.map((post) => (
+                <Card2
                   picture={post.imageUrl}
                   alt={post.title}
                   name={post.title}
@@ -78,72 +98,85 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
                 />
               ))
             ) : (
-            <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                  <h3 class="text-xl font-bold">No posts found - big problem</h3>
-                  <br>
-                  <p>Please <a href="../../footerpages/contact" class="text-blue-500 bold hover:underline mb-1"> contact </a> the site developer as soon as possible.</p>
-                  <br>
-                  <br>
-                  <div class="flex justify-center items-center">
-                    <img
-                      src="/images/shark.png"
-                      class="w-[15rem] h-[15rem] object-center"
-                      alt="Error shark"
-                    />
-                  </div>
+              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h3 class="text-xl font-bold">No posts found - big problem</h3>
+                <br />
+                <p>
+                  Please{" "}
+                  <a
+                    href="../../footerpages/contact"
+                    class="text-blue-500 bold hover:underline mb-1"
+                  >
+                    {" "}
+                    contact{" "}
+                  </a>{" "}
+                  the site developer as soon as possible.
+                </p>
+                <br />
+                <br />
+                <div class="flex justify-center items-center">
+                  <img
+                    src="/images/shark.png"
+                    class="w-[15rem] h-[15rem] object-center"
+                    alt="Error shark"
+                  />
                 </div>
-            )}
-          </Cage>
-          
-          <!-- Pagination Controls -->
-          <div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
-            {/* First page button */}
-            <a 
-              href="../" 
-              class={`px-3 py-2 rounded-lg mb-10 md:mb-15 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-              aria-disabled={!hasPrevPage}
-              aria-label="First page"
-            >
-              &lt;&lt;
-            </a>
-            
-            {/* Previous page button */}
-            <a 
-              href={currentPage === 2 ? '../' :`/page/${currentPage - 1}`} 
-              class={`px-3 py-2 rounded-lg mb-10 md:mb-15 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-              aria-disabled={!hasPrevPage}
-              aria-label="Previous page"
-            >
-              &lt;
-            </a>
-            
-            {/* Page indicator */}
-            <span class="px-3 py-2 font-medium mb-10 md:mb-15">
-              Page {currentPage} of {totalPages}
-            </span>
-            
-            {/* Next page button */}
-            <a 
-              href={hasNextPage ? `/page/${currentPage + 1}` : '#'} 
-              class={`px-3 py-2 mb-10 md:mb-15 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-              aria-disabled={!hasNextPage}
-              aria-label="Next page"
-            >
-              &gt;
-            </a>
-            
-            {/* Last page button */}
-            <a 
-              href={`/page/${totalPages}`} 
-              class={`px-3 py-2 mb-10 md:mb-15 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-              aria-disabled={!hasNextPage}
-              aria-label="Last page"
-            >
-              &gt;&gt;
-            </a>
-          </div>
-        </main>
-        <Footer />
+              </div>
+            )
+          }
+        </Cage>
+
+        <!-- Pagination Controls -->
+        <div
+          class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4"
+        >
+          {/* First page button */}
+          <a
+            href="../"
+            class={`px-3 py-2 rounded-lg mb-4 ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={!hasPrevPage}
+            aria-label="First page"
+          >
+            &lt;&lt;
+          </a>
+
+          {/* Previous page button */}
+          <a
+            href={currentPage === 2 ? "../" : `/page/${currentPage - 1}`}
+            class={`px-3 py-2 rounded-lg mb-4 ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={!hasPrevPage}
+            aria-label="Previous page"
+          >
+            &lt;
+          </a>
+
+          {/* Page indicator */}
+          <span class="px-3 py-2 font-medium mb-4">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          {/* Next page button */}
+          <a
+            href={hasNextPage ? `/page/${currentPage + 1}` : "#"}
+            class={`px-3 py-2 mb-4 rounded-lg ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={!hasNextPage}
+            aria-label="Next page"
+          >
+            &gt;
+          </a>
+
+          {/* Last page button */}
+          <a
+            href={`/page/${totalPages}`}
+            class={`px-3 py-2 mb-4 rounded-lg ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={!hasNextPage}
+            aria-label="Last page"
+          >
+            &gt;&gt;
+          </a>
+        </div>
+      </main>
+      <Footer />
     </container>
   </body>
 </html>

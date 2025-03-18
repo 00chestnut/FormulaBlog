@@ -9,7 +9,7 @@
   font-weight: normal;
   font-style: normal;
 }
-/* test */
+
 @font-face {
   font-family: "FormulaB";
   src: url("/fonts/Formula1-Bold_web_0.woff2") format("woff2"),
@@ -58,12 +58,15 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  min-height: 100vh;
 }
 
 main {
   flex: 1;
+  margin-bottom: 60px; /* Space for footer */
+  padding-bottom: 30px; /* Additional padding for pagination controls */
 }
+
 .Animated {
   transition: 0.3s ease-out;
 }
@@ -73,11 +76,13 @@ main {
   overflow: hidden;
 }
 
+/* Updated Footer styles */
 .Footer {
-  position: fixed;
+  position: relative; /* Changed from fixed to relative */
   bottom: 0;
   width: 100%;
   font-family: Formula, sans-serif;
+  z-index: 10;
 }
 
 /* Disclaimer Block */
@@ -89,7 +94,7 @@ main {
 
 /* Flexbox Container */
 .Cage {
-  padding-bottom: 200px;
+  padding-bottom: 40px; /* Reduced from 200px */
   padding-top: 100px;
   display: flex;
   flex-wrap: wrap; /* This is key - allows items to wrap to new rows */
@@ -100,9 +105,15 @@ main {
   padding-left: 30px;
   padding-right: 30px;
 }
+
 .Card2,
 .Card3 {
   margin-bottom: 50px;
+}
+
+/* Updated pagination styles */
+.pagination {
+  margin-bottom: 30px;
 }
 
 /* Media Queries for Responsiveness */
@@ -126,6 +137,7 @@ main {
   .Cage {
     flex-direction: column;
     align-items: center; /* Ensures cards are centered */
+    padding-bottom: 20px; /* Even smaller padding on mobile */
   }
 
   .Card2,
@@ -133,5 +145,13 @@ main {
     flex: 0 0 100%; /* Forces cards to take 100% of the width */
     max-width: 100%;
     width: 100%;
+  }
+  
+  main {
+    margin-bottom: 80px; /* More space on mobile for footer */
+  }
+  
+  .pagination {
+    margin-bottom: 40px; /* More space below pagination on mobile */
   }
 }
