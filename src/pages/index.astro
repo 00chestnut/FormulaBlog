@@ -3,39 +3,54 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Card2 from "../components/Card2.astro";
-import Card1 from "../components/Card1.astro";
-import SearchBar from "../components/SearchBar.astro";
 import Cage from "../components/Cage.astro";
-import { fetchPosts } from "../scripts/scripts.js"; 
+import SearchBar from "../components/SearchBar.astro";
+import { fetchPosts } from "../scripts/scripts.js";
 
 // Fetch posts from WordPress
-const posts = await fetchPosts();
+const allPosts = await fetchPosts();
+const postsPerPage = 3; // posts per page limiter (keep this consistent with [page].astro)
+const firstPagePosts = allPosts.slice(0, postsPerPage);
+const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
 export const prerender = true;
 ---
 
-<html>
+<html lang="en">
   <head>
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
-    <meta http-equiv="refresh" content="0;url=/page/1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="UTF-8">
-    <meta name="description" content="A blog about Formula 1.">
-    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard">
-    <meta name="author" content="00chestnut">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="OnBoard - Formula1">
-    <meta property="og:description" content="A blog about Formula 1.">
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="OnBoard - The latest news, insights and stories about Formula 1 racing."
+    />
+    <meta
+      name="keywords"
+      content="Formula 1, F1, OnBoard, Racing, Motorsport, F1 News"
+    />
+    <meta name="author" content="00chestnut" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="OnBoard - Formula 1" />
+    <meta
+      property="og:description"
+      content="The latest news, insights and stories about Formula 1 racing."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-website.com/" />
+    <link rel="canonical" href="https://your-website.com/" />
     <title>OnBoard - Formula 1</title>
   </head>
   <body>
     <container>
       <Header />
-        <main>
-          <Cage>
-            <SearchBar />
-            {posts.length > 0 ? (
+      <main>
+        <Cage>
+          <SearchBar />
+          {
+            firstPagePosts.length > 0 ? (
               //@ts-ignore
-              posts.map((post) => (    
+              firstPagePosts.map((post) => (
                 <Card2
                   picture={post.imageUrl}
                   alt={post.title}
@@ -46,23 +61,77 @@ export const prerender = true;
                 />
               ))
             ) : (
-            <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                  <h3 class="text-xl font-bold">No posts found - big problem</h3>
-                  <br>
-                  <p>Please <a href="../footerpages/contact" class="text-blue-500 bold hover:underline mb-1"> contact </a> the site developer as soon as possible.</p>
-                  <br>
-                  <br>
-                  <div class="flex justify-center items-center">
-                    <img
-                      src="/images/shark.png"
-                      class="w-[15rem] h-[15rem] object-center"
-                    />
-                  </div>
+              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h3 class="text-xl font-bold">No posts found - big problem</h3>
+                <br />
+                <p>
+                  Please
+                  <a
+                    href="./footerpages/contact"
+                    class="text-blue-500 bold hover:underline mb-1"
+                  >
+                    contact
+                  </a>
+                  the site developer as soon as possible.
+                </p>
+
+                <br />
+                <br />
+                <div class="flex justify-center items-center">
+                  <img
+                    src="/images/shark.png"
+                    class="w-[15rem] h-[15rem] object-center"
+                    alt="Error shark"
+                  />
                 </div>
-            )}
-          </Cage>
-        </main>
-        <Footer />
+              </div> // there is an error with this div
+            )
+          }
+        </Cage>
+
+        <!-- Pagination Controls -->
+        <div class="pagination flex justify-center items-center my-8 gap-2">
+          {/* First page button - disabled on index */}
+          <span
+            class="px-3 py-2 rounded-lg mb-12 bg-gray-300 text-gray-500 cursor-not-allowed"
+            aria-disabled="true"
+          >
+            &lt;&lt;
+          </span>
+
+          {/* Previous page button - disabled on index */}
+          <span
+            class="px-3 py-2 rounded-lg mb-12 bg-gray-300 text-gray-500 cursor-not-allowed"
+            aria-disabled="true"
+          >
+            &lt;
+          </span>
+
+          {/* Page indicator */}
+          <span class="px-3 py-2 font-medium mb-12">
+            Page 1 of {totalPages}
+          </span>
+
+          {/* Next page button */}
+          <a
+            href={totalPages > 1 ? `/page/2` : "#"}
+            class={`px-3 py-2 mb-12 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={totalPages <= 1}
+          >
+            &gt;
+          </a>
+
+          {/* Last page button */}
+          <a
+            href={totalPages > 1 ? `/page/${totalPages}` : "#"}
+            class={`px-3 py-2 mb-12 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={totalPages <= 1}
+          >
+            &gt;&gt;
+          </a>
+        </div>
+      </main>
+      <Footer />
     </container>
   </body>
 </html>

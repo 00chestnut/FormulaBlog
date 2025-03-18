@@ -1,4 +1,5 @@
 ---
+// src/pages/page/[page].astro
 import "../../styles/global.css";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
@@ -38,17 +39,22 @@ export async function getStaticPaths() {
 const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props;
 ---
 
-<html>
+<html lang="en">
   <head>
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
-    <meta name="description" content="A blog about Formula 1.">
-    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard">
+    <meta name="description" content="OnBoard - The latest news, insights and stories about Formula 1 racing. Page {currentPage} of {totalPages}.">
+    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard, Racing, Motorsport">
     <meta name="author" content="00chestnut">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="OnBoard - Formula1">
-    <meta property="og:description" content="A blog about Formula 1.">
+    <meta property="og:title" content="OnBoard - Formula 1 - Page {currentPage}">
+    <meta property="og:description" content="The latest news, insights and stories about Formula 1 racing. Page {currentPage} of {totalPages}.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={`https://your-website.com/page/${currentPage}`}>
+    <link rel="canonical" href={`https://your-website.com/page/${currentPage}`}>
+    {hasPrevPage && <link rel="prev" href={`/page/${currentPage - 1}`}>}
+    {hasNextPage && <link rel="next" href={`/page/${currentPage + 1}`}>}
     <title>OnBoard - Formula 1 - Page {currentPage}</title>
   </head>
   <body>
@@ -68,8 +74,6 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
                   btn="Read more"
                   slug={post.slug}
                 />
-                <Card2 />
-                <Card2 />
               ))
             ) : (
             <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -82,6 +86,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
                     <img
                       src="/images/shark.png"
                       class="w-[15rem] h-[15rem] object-center"
+                      alt="Error shark"
                     />
                   </div>
                 </div>
@@ -92,18 +97,20 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
           <div class="pagination flex justify-center items-center my-8 gap-2">
             {/* First page button */}
             <a 
-              href="/page/1" 
+              href="../" 
               class={`px-3 py-2 rounded-lg mb-12 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasPrevPage}
+              aria-label="First page"
             >
               &lt;&lt;
             </a>
             
             {/* Previous page button */}
             <a 
-              href={hasPrevPage ? `/page/${currentPage - 1}` : '#'} 
+              href={currentPage === 2 ? '../' :`/page/${currentPage - 1}`} 
               class={`px-3 py-2 rounded-lg mb-12 ${hasPrevPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasPrevPage}
+              aria-label="Previous page"
             >
               &lt;
             </a>
@@ -118,6 +125,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
               href={hasNextPage ? `/page/${currentPage + 1}` : '#'} 
               class={`px-3 py-2 mb-12 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasNextPage}
+              aria-label="Next page"
             >
               &gt;
             </a>
@@ -127,6 +135,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
               href={`/page/${totalPages}`} 
               class={`px-3 py-2 mb-12 rounded-lg ${hasNextPage ? 'bg-red-700 text-white hover:bg-red-800' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-disabled={!hasNextPage}
+              aria-label="Last page"
             >
               &gt;&gt;
             </a>

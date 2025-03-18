@@ -2,8 +2,8 @@
 import Search from "astro-pagefind/components/Search";
 ---
 
-<div class="container mx-auto px-4 h-26 w-[80%] ">
-  <div class="searchContainer">
+<div class="search-wrapper w-full mb-8">
+  <div class="searchContainer relative">
     <Search
       id="search"
       className="pagefind-ui"
@@ -11,22 +11,14 @@ import Search from "astro-pagefind/components/Search";
     />
   </div>
 </div>
-
 <style is:global>
-
-  
   .searchContainer {
-    z-index: 10;
-    position: absolute;
-    top: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    margin-top:50px;
-
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 0;
   }
 
-  /* Tailwind-inspired search bar styling */
   .pagefind-ui {
     --pagefind-ui-scale: 1;
     --pagefind-ui-primary: #4f46e5; /* indigo-600 */
@@ -37,8 +29,6 @@ import Search from "astro-pagefind/components/Search";
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-border-radius: 0.5rem; /* rounded-lg */
     --pagefind-ui-font: 'ui-sans-serif', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    /* background-color: red; */
-    height: 3rem;
     width: 100%;
   }
 
@@ -81,13 +71,16 @@ import Search from "astro-pagefind/components/Search";
   }
 
   .pagefind-ui .pagefind-ui__drawer {
-    color: red;
+    color: #111827;
     padding: 1rem;
     background-color: #fffffff8 !important;
     border: 1px solid #e5e7eb; /* gray-200 */
     border-radius: 0.5rem; /* rounded-lg */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
     margin-top: 0.5rem;
+    z-index: 50;
+    position: absolute;
+    width: 100%;
   }
 
   .pagefind-ui .pagefind-ui__message {
@@ -112,5 +105,12 @@ import Search from "astro-pagefind/components/Search";
     font-size: 0.875rem;
     line-height: 1.5rem;
     margin-top: 0.25rem;
+  }
+  
+  /* Make search results responsive */
+  @media (max-width: 768px) {
+    .searchContainer {
+      width: 95%;
+    }
   }
 </style>

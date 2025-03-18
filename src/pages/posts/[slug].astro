@@ -21,7 +21,6 @@ const { post } = Astro.props;
 
 <html>
   <head>
-    <link rel="icon" type="image/svg+xml" href="/f1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <meta name="description" content="A blog about Formula 1.">
@@ -32,6 +31,7 @@ const { post } = Astro.props;
     <meta property="og:description" content="A blog about Formula 1.">
     <!--@ts-ignore -->
     <title>{decodeHTMLEntities(post.title)} - OnBoard Formula 1</title>
+    <link rel="icon" type="image/svg+xml" href="/f1.svg" />
   </head>
   <body>
     <container>
