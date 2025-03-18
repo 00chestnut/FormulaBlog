@@ -13,7 +13,7 @@
     "@tailwindcss/vite": "^4.0.12",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "astro": "^5.4.2",
+    "astro": "^5.5.3",
     "astro-pagefind": "^1.8.3",
     "flowbite": "^3.1.2",
     "he": "^1.2.0",

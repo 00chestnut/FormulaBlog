@@ -11,7 +11,5 @@ export default defineConfig({
     },
 
   integrations: [react(), pagefind()], 
-}
-
-);
+});
 
