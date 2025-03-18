@@ -16,7 +16,6 @@ export function decodeHTMLEntities(text) {
     .replace(/&gt;/g, '>')
     .replace(/&#8211;/g, '-')
 } // life changing
-
 export async function fetchPosts(page = 1, perPage = 100) {
   try {
     const response = await fetch(
@@ -28,7 +27,6 @@ export async function fetchPosts(page = 1, perPage = 100) {
     }
   
     const posts = await response.json();
-
     return posts.map((post) => {
       // Get the featured image URL or fallback to a placeholder
       const featuredImageUrl =

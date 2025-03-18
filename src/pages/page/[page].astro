@@ -4,11 +4,12 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import Card2 from "../../components/Card2.astro";
 import Cage from "../../components/Cage.astro";
+import SearchBar from "../../components/SearchBar.astro";
 import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
   const allPosts = await fetchPosts();
-  const postsPerPage = 9; // posts per page limiter
+  const postsPerPage = 3; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
   
   // Create an array of page numbers starting from 1
@@ -55,6 +56,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
       <Header />
         <main>
           <Cage>
+            <SearchBar />
             {posts.length > 0 ? (
                 //@ts-ignore
               posts.map((post) => (    
@@ -66,6 +68,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props
                   btn="Read more"
                   slug={post.slug}
                 />
+                <Card2 />
                 <Card2 />
               ))
             ) : (
