@@ -53,6 +53,7 @@ html,
 body {
   height: 100%;
   margin: 0;
+  background: linear-gradient(to top, #FFFFFF , #000000)
 }
 
 body {
