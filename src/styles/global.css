@@ -49,11 +49,11 @@
 }
 
 /* Layout */
-html,
-body {
+html, body {
   height: 100%;
   margin: 0;
-  background: linear-gradient(to top, #FFFFFF , #000000)
+  background: linear-gradient(to bottom, #ffffff 30%, #e7e7e7 70%); /* Gradient from top to bottom */
+  background-attachment: fixed; /* Ensures the background stays fixed as the page scrolls */
 }
 
 body {
@@ -119,7 +119,7 @@ main {
 
 /* Media Queries for Responsiveness */
 /* Media Query for smaller screen sizes */
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .Header h1 {
     font-size: 1.3rem; /* Set smaller font size */
   }
