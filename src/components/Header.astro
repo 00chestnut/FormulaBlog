@@ -1,13 +1,13 @@
 ---
 import "../styles/global.css";
+import DarkMode from "../components/DarkMode.astro";
 ---
 
 <header class="Header bg-red-800 top-0 w-full z-50 h-[60px] flex items-center">
-  <h1><a href="/">OnBoard - Formula1</a></h1>
+  <h1><a href="/">OnBoard - Formula1</a></h1><DarkMode />
 </header>
-<!-- test -->
 <style>
-   @media (max-width: 400px) {
+   @media (max-width: 500px) {
     .Header {
       font-size: 1.5rem;
     }

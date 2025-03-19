@@ -1,3 +1,4 @@
+<!-- DarkMode.astro -->
 <div class="dark-mode-toggle">
   <input type="checkbox" id="dark-mode-toggle" class="toggle-input" />
   <label for="dark-mode-toggle" class="toggle-label">
@@ -24,7 +25,7 @@
 
 <style>
   .dark-mode-toggle {
-    position: relative;
+    float:right;
     width: 60px;
     height: 30px;
   }
@@ -104,3 +105,27 @@
     opacity: 1;
   }
 </style>
+<script is:inline>
+  // Check for saved preference when page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    
+    // Apply dark mode if it was previously enabled
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      darkModeToggle.checked = true;
+    }
+    
+    // Toggle dark mode when switch is clicked
+    darkModeToggle.addEventListener('change', () => {
+      if (darkModeToggle.checked) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('darkMode', 'false');
+      }
+    });
+  });
+</script>   

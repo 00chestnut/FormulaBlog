@@ -6,12 +6,11 @@ import Footer from "../components/Footer.astro";
 import Card2 from "../components/Card2.astro";
 import Cage from "../components/Cage.astro";
 import SearchBar from "../components/SearchBar.astro";
-import DarkMode from "../components/DarkMode.astro";
 import { fetchPosts } from "../scripts/scripts.js";
 
 // Fetch posts from WordPress
 const allPosts = await fetchPosts();
-const postsPerPage = 4; // posts per page limiter (keep this consistent with [page].astro)
+const postsPerPage = 2; // posts per page limiter (keep this consistent with [page].astro)
 const firstPagePosts = allPosts.slice(0, postsPerPage);
 const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
@@ -49,7 +48,6 @@ export const prerender = true;
       <main>
         <Cage>
           <div class="w-full mb-12">
-            <DarkMode />
             <SearchBar />
           </div>
           {

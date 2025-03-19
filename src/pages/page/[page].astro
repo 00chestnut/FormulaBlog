@@ -10,7 +10,7 @@ import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
   const allPosts = await fetchPosts();
-  const postsPerPage = 4; // posts per page limiter
+  const postsPerPage = 2; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
   // Create an array of page numbers starting from 1
@@ -142,7 +142,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
 
           {/* Previous page button */}
           <a
-            href={currentPage === 2 ? "../" : `/page/${currentPage - 1}`}
+            href={currentPage === 2 ? "../" : `/page/${currentPage - 1}` }
             class={`px-3 py-2 rounded-lg mb-4 ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={!hasPrevPage}
             aria-label="Previous page"
