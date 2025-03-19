@@ -7,33 +7,32 @@ const decodedName = name ? decodeHTMLEntities(name) : "Not found";
 ---
 
 <div
-  class="Card3 w-90 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col overflow-hidden"
+  class="Card3 w-90 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col overflow-hidden transition-colors duration-300 ease-in-out"
 >
-  <a href={articleUrl} class="h-1/2">
+  <a href={articleUrl} class="h-1/2 overflow-hidden">
     <img
       class="Animated w-full h-full object-cover rounded-t-lg"
       src={picture || "https://placehold.co/379x219?text=Image+Unavailable"}
       alt={alt || "Picture unavailable"}
     />
   </a>
-  <!-- test -->
   <div class="p-4 flex flex-col h-1/2 justify-between overflow-y-hidden">
-    <a href={articleUrl}>
+    <a href={articleUrl} class="group">
       <h5
-        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-300 ease-in-out"
       >
         {decodedName || "Not found"}
       </h5>
     </a>
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 transition-colors duration-300 ease-in-out">
       {desc || "Please enter data"}
     </p>
 
     <a
       href={articleUrl}
-      class="inline-flex items-center w-auto px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+      class="inline-flex items-center w-auto px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 transition-colors duration-300 ease-in-out"
     >
-      {btn || "Article unavailable"}
+      <span>{btn || "Article unavailable"}</span>
       <svg
         class="w-3.5 h-3.5 ml-2"
         aria-hidden="true"
@@ -48,7 +47,6 @@ const decodedName = name ? decodeHTMLEntities(name) : "Not found";
           stroke-width="2"
           d="M1 5h12m0 0L9 1m4 4L9 9"></path>
       </svg>
-      <!-- This part creates the lil arrow on the read more button :) -->
     </a>
   </div>
 </div>

@@ -8,6 +8,7 @@
     url("/fonts/Formula1-Regular_web_0.woff") format("woff");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -16,13 +17,14 @@
     url("/fonts/Formula1-Bold_web_0.woff") format("woff");
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 /* ------------------------------------------------------------------------------------------------------------------- */
 /* Header */
 .Header {
   position: sticky;
   top: 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   border-bottom: 3px solid white;
   background: linear-gradient(to right, hsl(0, 100%, 27%), hsl(0, 95%, 43%));
   color: white;
@@ -32,16 +34,17 @@
   padding: 20px;
   text-align: center;
   justify-content: space-between;
-  transition: color 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: relative;
   overflow: hidden;
+  z-index: 50;
 }
 
 .Header::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, hsl(0, 82%, 28%), hsl(220, 100%, 8%));
+  background: linear-gradient(to right, hsl(0, 82%, 28%), hsl(0, 0%, 15%));
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   z-index: -1;
@@ -49,6 +52,7 @@
 
 .dark .Header {
   color: white;
+  border-bottom: 3px solid hsl(220, 13%, 18%);
 }
 
 .dark .Header::before {
@@ -60,22 +64,43 @@
   font-size: 2rem;
   font-weight: 300;
   margin-left: 5px;
-  transition: transform 0.15s ease-in-out, text-shadow 0.05s ease-in;
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
   color: #f1f1f1;
+  position: relative;
+  display: inline-block;
 }
 
 .Header h1:hover {
-  transform: translateY(-1px);
-  text-shadow: 3px 3px 6px hsla(0, 0%, 74%, 0.466);
+  transform: translateY(-2px);
+  text-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
+
+.Header h1::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: white;
+  transition: width 0.3s ease-out;
+}
+
 /* ------------------------------------------------------------------------------------------------------------------- */
 /* Layout */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
-  background: linear-gradient(to bottom, #ffffff 30%, #e7e7e7 70%); /* Gradient from top to bottom */
-  background-attachment: fixed; /* Ensures the background stays fixed as the page scrolls */
+  background: linear-gradient(to bottom, #ffffff 30%, #e7e7e7 70%);
+  background-attachment: fixed;
+  transition: background 0.3s ease-in-out;
+}
+
+.dark html,
+.dark body {
+  background: linear-gradient(to bottom, #121212 30%, #1a1a1a 70%);
 }
 
 body {
@@ -86,25 +111,121 @@ body {
 
 main {
   flex: 1;
-  margin-bottom: 60px; /* Space for footer */
-  padding-bottom: 30px; /* Additional padding for pagination controls */
+  margin-bottom: 60px;
+  padding-bottom: 30px;
 }
 /* ------------------------------------------------------------------------------------------------------------------- */
+/* Card Animations */
 .Animated {
-  transition: 0.3s ease-out;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.4s ease;
 }
+
 .Animated:hover {
-  transition: 0.35s ease-out;
-  transform: scale(1.05);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark .Animated:hover {
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+}
+
+/* Updated Card2 & Card3 styles */
+.Card2,
+.Card3 {
+  margin-bottom: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
 }
+
+.Card2:hover,
+.Card3:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dark .Card2:hover,
+.dark .Card3:hover {
+  box-shadow: 0 15px 30px rgba(255, 255, 255, 0.05);
+}
+
+/* Card image zoom effect */
+.Card3 a img {
+  transition: transform 0.6s ease-out;
+}
+
+.Card3 a:hover img {
+  transform: scale(1.08);
+}
+
+/* Card title animation */
+.Card3 h5 {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.Card3 h5::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ef4444;
+  transition: width 0.3s ease;
+}
+
+.Card3 a:hover h5 {
+  color: #ef4444;
+}
+
+.dark .Card3 a:hover h5 {
+  color: #f87171;
+}
+
+.Card3 a:hover h5::after {
+  width: 100%;
+}
+
+/* Button animation */
+.Card3 a.inline-flex {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.Card3 a.inline-flex::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.5s ease;
+}
+
+.Card3 a.inline-flex:hover::before {
+  left: 100%;
+}
+
+.Card3 a.inline-flex svg {
+  transition: transform 0.3s ease;
+}
+
+.Card3 a.inline-flex:hover svg {
+  transform: translateX(5px);
+}
+
 /* Updated Footer styles */
 .Footer {
-  position: relative; /* Changed from fixed to relative */
+  position: relative;
   bottom: 0;
   width: 100%;
   font-family: Formula, sans-serif;
   z-index: 10;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Disclaimer Block */
@@ -112,37 +233,79 @@ main {
   object-position: center;
   margin-left: 20px;
   margin-right: 20px;
+  transition: transform 0.3s ease;
+}
+
+.Disclaimer:hover {
+  transform: translateY(-3px);
 }
 
 /* Flexbox Container */
 .Cage {
-  padding-bottom: 40px; /* Reduced from 200px */
+  padding-bottom: 40px;
   padding-top: 100px;
   display: flex;
-  flex-wrap: wrap; /* This is key - allows items to wrap to new rows */
-  gap: 20px;
-  justify-content: center; /* Centers the cards horizontally */
-  max-width: 1200px; /* Controls the overall container width */
-  margin: 0 auto; /* Centers the container on the page */
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
   padding-left: 30px;
   padding-right: 30px;
 }
 
-.Card2,
-.Card3 {
-  margin-bottom: 50px;
-}
-
-/* Updated pagination styles */
+/* Pagination improvements */
 .pagination {
   margin-bottom: 30px;
 }
 
+.pagination a,
+.pagination span {
+  transition: all 0.3s ease;
+}
+
+.pagination a:hover:not([aria-disabled="true"]) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* SearchBar improvements */
+.SearchBar input {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.SearchBar input:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px);
+}
+
+.dark .SearchBar input:focus {
+  border-color: #f87171;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.3);
+}
+
+/* Page transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main > * {
+  animation: fadeIn 0.5s ease-out;
+}
+
 /* Media Queries for Responsiveness */
-/* Media Query for smaller screen sizes */
 @media (max-width: 500px) {
   .Header h1 {
-    font-size: 1.3rem; /* Set smaller font size */
+    font-size: 1.3rem;
   }
 }
 
@@ -154,26 +317,26 @@ main {
   }
 }
 
-/* For very small screens like phones (including iPhone SE and others) */
 @media (max-width: 767px) {
   .Cage {
     flex-direction: column;
-    align-items: center; /* Ensures cards are centered */
-    padding-bottom: 20px; /* Even smaller padding on mobile */
+    align-items: center;
+    padding-bottom: 20px;
+    gap: 20px;
   }
 
   .Card2,
   .Card3 {
-    flex: 0 0 100%; /* Forces cards to take 100% of the width */
+    flex: 0 0 100%;
     max-width: 100%;
     width: 100%;
   }
-  
+
   main {
-    margin-bottom: 80px; /* More space on mobile for footer */
+    margin-bottom: 80px;
   }
-  
+
   .pagination {
-    margin-bottom: 40px; /* More space below pagination on mobile */
+    margin-bottom: 40px;
   }
 }

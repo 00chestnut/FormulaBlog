@@ -10,7 +10,7 @@ import { fetchPosts } from "../scripts/scripts.js";
 
 // Fetch posts from WordPress
 const allPosts = await fetchPosts();
-const postsPerPage = 2; // posts per page limiter (keep this consistent with [page].astro)
+const postsPerPage = 12; // posts per page limiter (keep this consistent with [page].astro)
 const firstPagePosts = allPosts.slice(0, postsPerPage);
 const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
@@ -42,10 +42,10 @@ export const prerender = true;
     <link rel="canonical" href="https://your-website.com/" />
     <title>OnBoard - Formula 1</title>
   </head>
-  <body>
+  <body class="transition-colors duration-300 ease-in-out">
     <container>
-      <Header/>
-      <main>
+      <Header />
+      <main class="transition-colors duration-300 ease-in-out">
         <Cage>
           <div class="w-full mb-12">
             <SearchBar />
@@ -62,18 +62,16 @@ export const prerender = true;
                   btn="Read more"
                   slug={post.slug}
                 />
-                <Card2 />
-                <Card2 />
               ))
             ) : (
-              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                <h3 class="text-xl font-bold">No posts found - big problem</h3>
+              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 transition-colors duration-300 ease-in-out">
+                <h3 class="text-xl font-bold dark:text-white transition-colors duration-300 ease-in-out">No posts found - big problem</h3>
                 <br />
-                <p>
+                <p class="dark:text-gray-300 transition-colors duration-300 ease-in-out">
                   Please
                   <a
                     href="./footerpages/contact"
-                    class="text-blue-500 bold hover:underline mb-1"
+                    class="text-blue-500 bold hover:underline mb-1 transition-colors duration-300 ease-in-out"
                   >
                     contact
                   </a>
@@ -100,7 +98,7 @@ export const prerender = true;
         >
           {/* First page button - disabled on index */}
           <span
-            class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed"
+            class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed transition-colors duration-300 ease-in-out"
             aria-disabled="true"
           >
             &lt;&lt;
@@ -108,21 +106,21 @@ export const prerender = true;
 
           {/* Previous page button - disabled on index */}
           <span
-            class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed"
+            class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed transition-colors duration-300 ease-in-out"
             aria-disabled="true"
           >
             &lt;
           </span>
 
           {/* Page indicator */}
-          <span class="px-3 py-2 font-medium mb-4">
+          <span class="px-3 py-2 font-medium mb-4 dark:text-white transition-colors duration-300 ease-in-out">
             Page 1 of {totalPages}
           </span>
 
           {/* Next page button */}
           <a
             href={totalPages > 1 ? `/page/2` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={totalPages <= 1}
           >
             &gt;
@@ -131,7 +129,7 @@ export const prerender = true;
           {/* Last page button */}
           <a
             href={totalPages > 1 ? `/page/${totalPages}` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={totalPages <= 1}
           >
             &gt;&gt;
@@ -140,5 +138,14 @@ export const prerender = true;
       </main>
       <Footer />
     </container>
+    
+    <style is:global>
+      /* Add transition for all elements */
+      * {
+        transition-property: background-color, border-color, color, fill, stroke;
+        transition-duration: 1s;
+        transition-timing-function: ease-in-out;
+      }
+    </style>
   </body>
 </html>
