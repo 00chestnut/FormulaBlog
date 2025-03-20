@@ -10,7 +10,7 @@ import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
   const allPosts = await fetchPosts();
-  const postsPerPage = 12; // posts per page limiter
+  const postsPerPage =4; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
   // Create an array of page numbers starting from 1

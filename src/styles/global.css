@@ -93,16 +93,20 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: linear-gradient(to bottom, #ffffff 30%, #e7e7e7 70%);
+  background:#e7e7e7;
   background-attachment: fixed;
-  transition: background 0.3s ease-in-out;
 }
 
 .dark html,
-.dark body {
-  background: #1C1C1C;
+.dark body, .dark main, .dark container {
+  
+  transition: background 0.1s ease-in-out;
+  background: #1C1C1C !important;
+  background-attachment: fixed;
 }
-
+.dark .PageNumber{
+  color:#bebab5;
+}
 body {
   display: flex;
   flex-direction: column;
@@ -242,6 +246,12 @@ background-color:#FF6F61;
   font-family: Formula, sans-serif;
   z-index: 10;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+.dark .Footer{
+  background-color:#707070;
+}
+.dark .ftext, .dark .flinks{
+  color:white;
 }
 
 /* Disclaimer Block */
