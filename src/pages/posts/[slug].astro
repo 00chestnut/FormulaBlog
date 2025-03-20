@@ -62,6 +62,7 @@ const { post } = Astro.props;
             </div>
             <!--@ts-ignore -->
             <div
+              data-pagefind-body
               class="Content prose max-w-none preserve-whitespace dark:prose-invert"
               set:html={post.content}
             />

@@ -10,7 +10,7 @@ import { fetchPosts } from "../scripts/scripts.js";
 
 // Fetch posts from WordPress
 const allPosts = await fetchPosts();
-const postsPerPage = 9; // posts per page limiter (keep this consistent with [page].astro)
+const postsPerPage = 3; // posts per page limiter (keep this consistent with [page].astro)
 const firstPagePosts = allPosts.slice(0, postsPerPage);
 const totalPages = Math.ceil(allPosts.length / postsPerPage);
 

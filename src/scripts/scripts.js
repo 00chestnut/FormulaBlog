@@ -19,7 +19,7 @@ export function decodeHTMLEntities(text) {
 export async function fetchPosts(page = 1, perPage = 100) {
   try {
     const response = await fetch(
-      `http://maks..z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?_embed&per_page=${perPage}`
+      `http://maks.z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?_embed&per_page=${perPage}`
     );
 
     if (!response.ok) {
