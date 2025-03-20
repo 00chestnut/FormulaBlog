@@ -16,6 +16,7 @@ const decodedName = name ? decodeHTMLEntities(name) : "Not found";
       alt={alt || "Picture unavailable"}
     />
   </a>
+  <div hidden data-pagefind-meta="title">{decodedName || "Not found"}</div>
   <div class="p-4 flex flex-col h-1/2 justify-between overflow-y-hidden">
     <a href={articleUrl} class="group">
       <h5 class="Title mb-2 text-2xl font-bold tracking-tight text-gray-900">

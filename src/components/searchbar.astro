@@ -11,7 +11,10 @@ import Search from "astro-pagefind/components/Search";
         showImages: true,
         showEmptyFilters: false,
         resetStyles: false,
-        excerptLength: 150, 
+        excerptLength: 150,
+        resultTitle: {
+          field: "title"
+        }
       }}
     />
   </div>
@@ -21,7 +24,7 @@ import Search from "astro-pagefind/components/Search";
     position: relative;
     margin-bottom: 2rem;
   }
-  
+
   .searchContainer {
     z-index: 10;
     position: absolute;
@@ -40,7 +43,8 @@ import Search from "astro-pagefind/components/Search";
     --pagefind-ui-border: #e5e7eb; /* gray-200 */
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-border-radius: 0.5rem; /* rounded-lg */
-    --pagefind-ui-font: 'ui-sans-serif', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --pagefind-ui-font: "ui-sans-serif", system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     width: 100%;
   }
 
@@ -57,7 +61,9 @@ import Search from "astro-pagefind/components/Search";
   }
 
   .pagefind-ui .pagefind-ui__form {
-    box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+    box-shadow:
+      0 1px 7px 1px rgba(0, 0, 0, 0.1),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
     border-radius: 0.5rem; /* rounded-lg */
     overflow: hidden;
   }
@@ -99,7 +105,9 @@ import Search from "astro-pagefind/components/Search";
     background-color: #fffffff8 !important;
     border: 1px solid #e5e7eb; /* gray-200 */
     border-radius: 0.5rem; /* rounded-lg */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
     margin-top: 0.5rem;
     max-height: 80vh;
     overflow-y: auto;
@@ -146,19 +154,19 @@ import Search from "astro-pagefind/components/Search";
       width: 100%;
       margin-top: 0;
     }
-    
+
     .pagefind-ui .pagefind-ui__drawer {
       max-height: 70vh;
       left: 0 !important;
       right: 0 !important;
       width: 100% !important;
     }
-    
+
     .pagefind-ui .pagefind-ui__result {
       display: flex;
       flex-direction: column;
     }
-    
+
     .pagefind-ui .pagefind-ui__result-thumb {
       margin-bottom: 0.75rem;
       width: 100%;

@@ -52,6 +52,8 @@ const { post } = Astro.props;
               class="whitetext text-3xl font-bold mb-2 text-gray-900 dark:text-white"
             >
               <!--@ts-ignore -->
+            <div hidden data-pagefind-meta="title">{decodeHTMLEntities(post.title)}</div>
+              <!--@ts-ignore -->
               {decodeHTMLEntities(post.title)}
             </h1><!--@ts-ignore -->
             <div class="whitetext text-gray-500 dark:text-gray-400 mb-4">
