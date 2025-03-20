@@ -25,7 +25,7 @@
 
 <style>
   .dark-mode-toggle {
-    float:right;
+    float: right;
     width: 60px;
     height: 30px;
   }
@@ -94,7 +94,7 @@
 
   .toggle-input:checked + .toggle-label .toggle-thumb {
     transform: translateX(30px);
-    background-color:rgba(255, 217, 0, 0.336);
+    background-color: rgba(255, 217, 0, 0.336);
   }
 
   .toggle-input:checked + .toggle-label .sun {
@@ -107,25 +107,26 @@
 </style>
 <script is:inline>
   // Check for saved preference when page loads
-  document.addEventListener('DOMContentLoaded', () => {
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    
+  document.addEventListener("DOMContentLoaded", () => {
+    const darkModeToggle = document.getElementById("dark-mode-toggle");
+    const isDarkMode = localStorage.getItem("darkMode") === "true";
+
     // Apply dark mode if it was previously enabled
     if (isDarkMode) {
-      document.documentElement.classList.add('dark'); 
+      document.documentElement.classList.add("dark");
       darkModeToggle.checked = true;
     }
-    
+
     // Toggle dark mode when switch is clicked
-    darkModeToggle.addEventListener('change', () => {
+    darkModeToggle.addEventListener("change", () => {
       if (darkModeToggle.checked) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('darkMode', 'true');
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("darkMode", "true");
       } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('darkMode', 'false');
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("darkMode", "false");
       }
     });
   });
-</script>   
+</script>
+
