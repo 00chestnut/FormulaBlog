@@ -10,13 +10,13 @@ import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
   const allPosts = await fetchPosts();
-  const postsPerPage =4; // posts per page limiter
+  const postsPerPage = 4; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
-  // Create an array of page numbers starting from 1
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  // Create an array of page numbers starting from 2 (not 1)
+  const pages = Array.from({ length: totalPages - 1 }, (_, i) => i + 2);
 
-  // Return the paths for all pages
+  // Return the paths for all pages except page 1
   return pages.map((page) => {
     // Ensure correct slicing of posts per page
     const start = (page - 1) * postsPerPage;
@@ -127,7 +127,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
       
             <a href={currentPage === 2 ? "../" : `/page/${currentPage - 1}`} class={`px-3 py-2 rounded-lg ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasPrevPage}>&lt;</a>
       
-            <span class="px-3 py-2 font-medium dark:text-white">
+            <span class="PageNumber px-3 py-2 font-medium dark:text-white">
               Page {currentPage} of {totalPages}
             </span>
       
@@ -143,7 +143,6 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
     </container>
     
     <style is:global>
-      /* Add transition for all elements */
       * {
         transition-property: background-color, border-color, color, fill, stroke;
         transition-duration: 300ms;

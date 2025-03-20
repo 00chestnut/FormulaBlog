@@ -22,66 +22,77 @@ const { post } = Astro.props;
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="UTF-8">
-    <meta name="description" content="A blog about Formula 1.">
-    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard">
-    <meta name="author" content="00chestnut">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="OnBoard - Formula1">
-    <meta property="og:description" content="A blog about Formula 1.">
+    <meta charset="UTF-8" />
+    <!--@ts-ignore -->
+    <meta name="description" content={post.desc} />
+    <meta name="keywords" content="Formula 1, Blog, F1, OnBoard" />
+    <meta name="author" content="00chestnut" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="OnBoard - Formula1" />
+    <meta property="og:description" content="A blog about Formula 1." />
     <!--@ts-ignore -->
     <title>{decodeHTMLEntities(post.title)} - OnBoard Formula 1</title>
     <link rel="icon" type="image/svg+xml" href="/f1.svg" />
   </head>
-  <body class="transition-colors duration-300 ease-in-out">
+  <body class="darkbg transition-colors duration-300 ease-in-out">
     <container>
       <Header />
-      <main class="max-w-4xl mx-auto px-4 py-8 mb-[30rem] transition-colors duration-300 ease-in-out">
-        <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden pb-2 transition-colors duration-300 ease-in-out">
+      <main class="max-w-4xl mx-auto px-4 py-8 mb-[30rem]">
+        <article class="bg-whiterounded-lg shadow-md overflow-hidden pb-2">
           <!--@ts-ignore -->
-          <img 
+          <img
             src={post.imageUrl}
             alt={decodeHTMLEntities(post.title)}
             class="w-full aspect-[16/9] md:h-[500px] object-cover object-bottom"
           />
           <!--Image above title (could be replaced in the future with a local banner!) -->
 
-          <div class="p-6">
-            <h1 class="text-3xl font-bold mb-2 text-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
+          <div class="darkbg p-6">
+            <h1
+              class="whitetext text-3xl font-bold mb-2 text-gray-900 dark:text-white"
+            >
               <!--@ts-ignore -->
               {decodeHTMLEntities(post.title)}
             </h1><!--@ts-ignore -->
-            <div class="text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-300 ease-in-out">Published on {post.date}</div>
+            <div class="whitetext text-gray-500 dark:text-gray-400 mb-4">
+              <!--@ts-ignore -->
+              Published on {post.date}
+            </div>
             <!--@ts-ignore -->
-            <div class="Content prose max-w-none preserve-whitespace dark:prose-invert transition-colors duration-300 ease-in-out" set:html={post.content} />
+            <div
+              class="Content prose max-w-none preserve-whitespace dark:prose-invert"
+              set:html={post.content}
+            />
           </div>
         </article>
         <!-- Back to all posts link -->
         <div class="mt-6">
-          <a 
-            href="/page/1" 
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 transition-colors duration-300 ease-in-out"
+          <a
+            href="/"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800"
           >
-            <svg 
-              class="w-3.5 h-3.5 mr-2 rotate-180" 
-              aria-hidden="true" 
-              xmlns="http://www.w3.org/2000/svg" 
-              fill="none" 
+            <svg
+              class="w-3.5 h-3.5 mr-2 rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
               viewBox="0 0 14 10"
             >
-              <path 
-                stroke="currentColor" 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
-                stroke-width="2" 
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              ></path>
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"></path>
             </svg>
             Back to all posts
           </a>
         </div>
         <!--@ts-ignore -->
-        <div class="Tags text-gray-400 dark:text-gray-500 text-xs object-bottom transition-colors duration-300 ease-in-out" set:html={post.tags}>
+        <div
+          class="Tags text-gray-400 dark:text-gray-500 text-xs object-bottom"
+          set:html={post.tags}
+        >
           <h6>Tags:</h6>
         </div>
       </main>
@@ -90,25 +101,24 @@ const { post } = Astro.props;
   </body>
 </html>
 
-
 <style is:global>
-  .Tags{
-    gap:20px;
+  .Tags {
+    gap: 20px;
   }
-  .Content{
+  .Content {
     line-height: 1.6;
     color: #333;
   }
   .dark .Content {
     color: #d1d5db;
   }
-  .Content h1{
+  .Content h1 {
     font-size: 2rem;
   }
-  .Content h2{
+  .Content h2 {
     font-size: 1.5rem;
   }
-  .Content h3{
+  .Content h3 {
     font-size: 1.25rem;
   }
   .preserve-whitespace p {

@@ -96,12 +96,19 @@ body {
   background:#e7e7e7;
   background-attachment: fixed;
 }
-
+.dark .darkbg{
+  background-color:#141414;
+  transition: color 0.25s ease-in-out;
+}
+.dark .whitetext{
+  color: #d1d5db;
+  transition: color 0.2s ease-in-out;
+}
 .dark html,
 .dark body, .dark main, .dark container {
   
   transition: background 0.1s ease-in-out;
-  background: #1C1C1C !important;
+  background: #1f1f1f !important;
   background-attachment: fixed;
 }
 .dark .PageNumber{
@@ -225,16 +232,16 @@ main {
 
 
 .dark .articleUrl{
-background-color:#FF6F61;
+background-color:#ad2e2e;
 }
 .dark .Title{
-  color: #F5E8D8;
+  color: #cfccc9;
 }
 .dark .Subtext{
-  color: #bebab5;
+  color: #aba9a7;
 }
 .dark .Card3{
-  background-color: hsl(260, 9%, 21%);
+  background-color: hsl(260, 7%, 16%);
   border-color:#5C5C5C;
 }
 /*----------------------------------------------------------------------------------------------------------*/

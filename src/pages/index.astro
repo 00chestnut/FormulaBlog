@@ -93,45 +93,29 @@ export const prerender = true;
         </Cage>
 
         <!-- Pagination Controls -->
-        <div
-          class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4"
-        >
-          {/* First page button - disabled on index */}
-          <span
-            class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed transition-colors duration-300 ease-in-out"
-            aria-disabled="true"
-          >
+        <div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
+          <!-- First page button - disabled on index -->
+          <span class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed transition-colors duration-300 ease-in-out" aria-disabled="true">
             &lt;&lt;
           </span>
-
-          {/* Previous page button - disabled on index */}
-          <span
-            class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed transition-colors duration-300 ease-in-out"
-            aria-disabled="true"
-          >
+        
+          <!-- Previous page button - disabled on index -->
+          <span class="px-3 py-2 rounded-lg mb-4 bg-gray-300 text-gray-500 cursor-not-allowed transition-colors duration-300 ease-in-out" aria-disabled="true">
             &lt;
           </span>
-
-          {/* Page indicator */}
+        
+          <!-- Page indicator -->
           <span class="PageNumber px-3 py-2 font-medium mb-4">
             Page 1 of {totalPages}
           </span>
-
-          {/* Next page button */}
-          <a
-            href={totalPages > 1 ? `/page/2` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={totalPages <= 1}
-          >
+        
+          <!-- Next page button -->
+          <a href={totalPages > 1 ? `/page/2` : "#"} class={`px-3 py-2 mb-4 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={totalPages <= 1}>
             &gt;
           </a>
-
-          {/* Last page button */}
-          <a
-            href={totalPages > 1 ? `/page/${totalPages}` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={totalPages <= 1}
-          >
+        
+          <!-- Last page button -->
+          <a href={totalPages > 1 ? `/page/${totalPages}` : "#"} class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={totalPages <= 1}>
             &gt;&gt;
           </a>
         </div>
