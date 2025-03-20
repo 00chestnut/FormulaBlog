@@ -1,85 +1,110 @@
----
----
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="/f1.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 - Page Not Found</title>
-  <style>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/f1.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found</title>
+    <style>
+      @font-face {
+        font-family: "Formula";
+        src:
+          url("/fonts/Formula1-Regular_web_0.woff2") format("woff2"),
+          url("/fonts/Formula1-Regular_web_0.woff") format("woff");
+      }
 
-    @font-face {
-      font-family: "Formula";
-      src: url("/fonts/Formula1-Regular_web_0.woff2") format("woff2"),
-           url("/fonts/Formula1-Regular_web_0.woff") format("woff");
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-  
-    body {
-      font-family: "Formula", Arial, sans-serif;
-      background: linear-gradient(to top, rgb(167, 87, 94) 10%, #7c7c80 90%);
-      color: white;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+      body {
+        font-family: "Formula", Arial, sans-serif;
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("../images/skybg.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover; /* Makes sure the image covers the entire viewport */
+        animation: backgroundScroll 45s linear infinite reverse;
+        overflow: hidden;
+      }
 
-    .container {
-      position: relative;
-      padding: 20px;
-    }
+      /* Smooth background scrolling animation */
+      @keyframes backgroundScroll {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 100% 0;
+        }
+      }
 
-    .error-code {
-      font-size: 8rem;
-      font-weight: bold;
-      color: #E10600;
-      text-shadow: 0 0 6px rgba(225, 6, 0, 0.7);
-    }
+      .container {
+        position: relative;
+        padding: 20px;
+        z-index: 2; /* Ensure text is above the background */
+      }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
+      .error-code {
+        font-size: 8rem;
+        font-weight: bold;
+        color: hsla(210, 69%, 63%, 0.7);
+        text-shadow:
+          0 0 10px rgba(78, 161, 213, 0.612),
+          0 0 20px rgba(117, 194, 220, 0.167);
+      }
 
-    p {
-      font-size: 1.2rem;
-      max-width: 400px;
-      margin: 0 auto 1.5rem;
-      line-height: 1.5;
-    }
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #fff;
+      }
 
-    .button {
-      display: inline-block;
-      background: #ca0c06;
-      color: white;
-      padding: 10px 25px;
-      text-transform: uppercase;
-      font-weight: bold;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
+      p {
+        font-size: 1.2rem;
+        max-width: 500px;
+        margin: 0 auto 1.5rem;
+        line-height: 1.5;
+        color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Slight transparency for better readability */
+      }
 
-    .button:hover {
-      background: #ff1313;
-      box-shadow: 0 6px 20px rgba(225, 6, 0, 0.6);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1 class="error-code">404</h1>
-    <h2>You may have ventured too far</h2>
-    <p>This page doesn't exist.</p>
-    <a href="/" class="button">Back to OnBoard</a>
-  </div>
-</body>
+      .button {
+        display: inline-block;
+        background: hsla(211, 63%, 47%, 0.6);
+        color: white;
+        padding: 10px 25px;
+        text-transform: uppercase;
+        font-weight: bold;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: 0.3s;
+        margin-top: 20px;
+      }
+
+      .button:hover {
+        background: hsla(203, 76%, 47%, 0.727);
+        box-shadow: 0 6px 20px rgba(156, 237, 237, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="error-code">404</h1>
+      <h2>You may have ventured too far</h2>
+      <p>This page doesn't exist.</p>
+      <a href="/" class="button">Back to OnBoard</a>
+    </div>
+  </body>
 </html>
