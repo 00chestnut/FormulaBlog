@@ -18,13 +18,14 @@ const decodedName = name ? decodeHTMLEntities(name) : "Not found";
   </a>
   <div class="p-4 flex flex-col h-1/2 justify-between overflow-y-hidden">
     <a href={articleUrl} class="group">
-      <h5
-        class="Title mb-2 text-2xl font-bold tracking-tight text-gray-900"
-      >
+      <h5 class="Title mb-2 text-2xl font-bold tracking-tight text-gray-900">
         {decodedName || "Not found"}
       </h5>
     </a>
-    <p class="Subtext mb-3 font-normal text-gray-700">
+    <p class="Subtext mb-3 font-normal text-gray-700"
+    data-pagefind-meta="description"
+    data-pagefind-ignore
+    data-pagefind-weight="0.1">
       {desc || "Please enter data"}
     </p>
 
