@@ -79,14 +79,14 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
   <body class="transition-colors duration-300 ease-in-out">
     <container>
       <Header />
-      <main class="transition-colors duration-300 ease-in-out">
+      <main class="flex flex-col flex-grow min-h-screen">
         <Cage>
           <div class="w-full mb-12">
             <SearchBar />
           </div>
-          {
+          {  
             posts.length > 0 ? (
-              //@ts-ignore
+            // @ts-ignore
               posts.map((post) => (
                 <Card2
                   picture={post.imageUrl}
@@ -98,83 +98,46 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
                 />
               ))
             ) : (
-              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 transition-colors duration-300 ease-in-out">
-                <h3 class="text-xl font-bold dark:text-white transition-colors duration-300 ease-in-out">No posts found - big problem</h3>
+              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h3 class="text-xl font-bold dark:text-white">No posts found - big problem</h3>
                 <br />
-                <p class="dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                <p class="dark:text-gray-300">
                   Please{" "}
-                  <a
-                    href="../../footerpages/contact"
-                    class="text-blue-500 bold hover:underline mb-1 transition-colors duration-300 ease-in-out"
-                  >
-                    {" "}
-                    contact{" "}
+                  <a href="../../footerpages/contact" class="text-blue-500 bold hover:underline">
+                    contact
                   </a>{" "}
                   the site developer as soon as possible.
                 </p>
                 <br />
                 <br />
                 <div class="flex justify-center items-center">
-                  <img
-                    src="/images/shark.png"
-                    class="w-[15rem] h-[15rem] object-center"
-                    alt="Error shark"
-                  />
+                  <img src="/images/shark.png" class="w-[15rem] h-[15rem] object-center" alt="Error shark" />
                 </div>
               </div>
             )
           }
         </Cage>
-
-        <!-- Pagination Controls -->
-        <div
-          class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4"
-        >
-          {/* First page button */}
-          <a
-            href="../"
-            class={`px-3 py-2 rounded-lg mb-4 transition-colors duration-300 ease-in-out ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={!hasPrevPage}
-            aria-label="First page"
-          >
-            &lt;&lt;
-          </a>
-
-          {/* Previous page button */}
-          <a
-            href={currentPage === 2 ? "../" : `/page/${currentPage - 1}` }
-            class={`px-3 py-2 rounded-lg mb-4 transition-colors duration-300 ease-in-out ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={!hasPrevPage}
-            aria-label="Previous page"
-          >
-            &lt;
-          </a>
-
-          {/* Page indicator */}
-          <span class="px-3 py-2 font-medium mb-4 dark:text-white transition-colors duration-300 ease-in-out">
-            Page {currentPage} of {totalPages}
-          </span>
-
-          {/* Next page button */}
-          <a
-            href={hasNextPage ? `/page/${currentPage + 1}` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={!hasNextPage}
-            aria-label="Next page"
-          >
-            &gt;
-          </a>
-
-          {/* Last page button */}
-          <a
-            href={`/page/${totalPages}`}
-            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={!hasNextPage}
-            aria-label="Last page"
-          >
-            &gt;&gt;
-          </a>
+      
+        <!-- Wrapper to push pagination to the bottom -->
+        <div class="flex-grow"></div> 
+      
+        <div class="pagination-container py-4">
+          <div class="pagination flex justify-center items-center my-4 gap-2 px-4">
+            <a href="../" class={`px-3 py-2 rounded-lg ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasPrevPage}>&lt;&lt;</a>
+      
+            <a href={currentPage === 2 ? "../" : `/page/${currentPage - 1}`} class={`px-3 py-2 rounded-lg ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasPrevPage}>&lt;</a>
+      
+            <span class="px-3 py-2 font-medium dark:text-white">
+              Page {currentPage} of {totalPages}
+            </span>
+      
+            <a href={hasNextPage ? `/page/${currentPage + 1}` : "#"} class={`px-3 py-2 rounded-lg ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasNextPage}>&gt;</a>
+      
+            <a href={`/page/${totalPages}`} class={`px-3 py-2 rounded-lg ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasNextPage}>&gt;&gt;</a>
+          </div>
         </div>
+      </main>
+      
       </main>
       <Footer />
     </container>
