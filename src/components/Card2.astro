@@ -19,18 +19,18 @@ const decodedName = name ? decodeHTMLEntities(name) : "Not found";
   <div class="p-4 flex flex-col h-1/2 justify-between overflow-y-hidden">
     <a href={articleUrl} class="group">
       <h5
-        class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
+        class="Title mb-2 text-2xl font-bold tracking-tight text-gray-900"
       >
         {decodedName || "Not found"}
       </h5>
     </a>
-    <p class="mb-3 font-normal text-gray-700">
+    <p class="Subtext mb-3 font-normal text-gray-700">
       {desc || "Please enter data"}
     </p>
 
     <a
       href={articleUrl}
-      class="inline-flex items-center w-auto px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
+      class="articleUrl inline-flex items-center w-auto px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
     >
       <span>{btn || "Article unavailable"}</span>
       <svg
