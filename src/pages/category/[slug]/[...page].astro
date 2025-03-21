@@ -6,7 +6,7 @@ import Card2 from "../../../components/Card2.astro";
 import Cage from "../../../components/Cage.astro";
 import SearchBar from "../../../components/SearchBar.astro";
 import Filters from "../../../components/Filters.astro";
-import { fetchPosts, fetchCategories } from "../../../scripts/scripts.js";
+import { fetchPosts, fetchCategories, decodeHTMLEntities } from "../../../scripts/scripts.js";
 
 // Posts per page for category pages
 const postsPerPage = 9;
@@ -44,22 +44,38 @@ const { slug, page } = Astro.params;
 const currentPage = parseInt(page?.[0] || "2"); // this file handles pages 2+
 const { categoryId, categoryName, totalPages } = Astro.props;
 
-// Fetch posts filtered by category (using categoryId as provided via props)
-const posts = await fetchPosts(1, 100, categoryId);
-// Extra check: filter by matching category slug from each post's categories array
+// Fetch all categories to get the current category details if not provided via props
+let currentCategoryId = categoryId;
+let currentCategoryName = categoryName;
+
+if (!currentCategoryId || !currentCategoryName) {
+  const categories = await fetchCategories();
+  //@ts-ignore
+  const currentCategory = categories.find(cat => cat.slug === slug);
+  if (currentCategory) {
+    currentCategoryId = currentCategory.id;
+    currentCategoryName = currentCategory.name;
+  }
+}
+
+// Fetch posts filtered by category ID directly from the API
+const posts = await fetchPosts(1, 100, currentCategoryId);
+
+// Double-check: filter by matching category slug just to be safe
 //@ts-ignore
 const categoryPosts = posts.filter(post =>
 //@ts-ignore
   post.categories.some(c => c.slug === slug)
 );
 
-// Slice the posts array for the current page
+// Calculate pagination
 const start = (currentPage - 1) * postsPerPage;
 const end = start + postsPerPage;
 const currentPagePosts = categoryPosts.slice(start, end);
+const calculatedTotalPages = Math.ceil(categoryPosts.length / postsPerPage);
 
 // Validate that the current page is within range
-const isValidPage = currentPage >= 1 && currentPage <= totalPages;
+const isValidPage = currentPage >= 1 && currentPage <= calculatedTotalPages;
 ---
 
 <html lang="en">
@@ -69,17 +85,17 @@ const isValidPage = currentPage >= 1 && currentPage <= totalPages;
     <meta charset="UTF-8" />
     <meta
       name="description"
-      content={`OnBoard - ${categoryName} - Page ${currentPage} of ${totalPages}`}
+      content={`OnBoard - ${currentCategoryName} - Page ${currentPage} of ${calculatedTotalPages}`}
     />
     <meta name="keywords" content="Formula 1, Blog, F1, OnBoard, Racing, Motorsport" />
     <meta name="author" content="00chestnut" />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content={`OnBoard - ${categoryName} - Page ${currentPage}`} />
-    <meta property="og:description" content={`Posts in the "${categoryName}" category. Page ${currentPage} of ${totalPages}.`} />
+    <meta property="og:title" content={`OnBoard - ${currentCategoryName} - Page ${currentPage}`} />
+    <meta property="og:description" content={`Posts in the "${currentCategoryName}" category. Page ${currentPage} of ${calculatedTotalPages}.`} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={`https://your-website.com/category/${slug}/${currentPage}`} />
     <link rel="canonical" href={`https://your-website.com/category/${slug}/${currentPage}`} />
-    <title>OnBoard - {categoryName} - Page {currentPage}</title>
+    <title>OnBoard - {currentCategoryName} - Page {currentPage}</title>
   </head>
   <body class="transition-colors duration-300 ease-in-out">
     <container>
@@ -103,7 +119,7 @@ const isValidPage = currentPage >= 1 && currentPage <= totalPages;
               </div>
             </div>
           ) : currentPagePosts.length > 0 ? (
-            // @ts-ignore
+            //@ts-ignore
             currentPagePosts.map((post) => (
               <Card2
                 picture={post.imageUrl}
@@ -116,10 +132,10 @@ const isValidPage = currentPage >= 1 && currentPage <= totalPages;
             ))
           ) : (
             <div class="text-center p-8 bg-gray-100 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <h3 class="text-xl font-bold dark:text-white">No posts found - big problem</h3>
+              <h3 class="text-xl font-bold dark:text-white">No posts found</h3>
               <br />
               <p class="dark:text-gray-300">
-                Please <a href="/footerpages/contact" class="text-blue-500 bold hover:underline">contact</a> the site developer as soon as possible.
+                No posts found in this category. Please try another category or <a href="/footerpages/contact" class="text-blue-500 bold hover:underline">contact</a> the site developer.
               </p>
               <br /><br />
               <div class="flex justify-center items-center">
@@ -143,16 +159,16 @@ const isValidPage = currentPage >= 1 && currentPage <= totalPages;
 
           <!-- Page indicator -->
           <span class="PageNumber px-3 py-2 font-medium mb-4">
-            Page {currentPage} of {totalPages}
+            Page {currentPage} of {calculatedTotalPages}
           </span>
 
           <!-- Next page button -->
-          <a href={currentPage < totalPages ? `/category/${slug}/${currentPage + 1}` : "#"} class={`px-3 py-2 mb-4 rounded-lg ${currentPage < totalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={currentPage >= totalPages}>
+          <a href={currentPage < calculatedTotalPages ? `/category/${slug}/${currentPage + 1}` : "#"} class={`px-3 py-2 mb-4 rounded-lg ${currentPage < calculatedTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={currentPage >= calculatedTotalPages}>
             &gt;
           </a>
 
           <!-- Last page button -->
-          <a href={totalPages > 1 ? `/category/${slug}/${totalPages}` : "#"} class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < totalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={currentPage >= totalPages}>
+          <a href={calculatedTotalPages > 1 ? `/category/${slug}/${calculatedTotalPages}` : "#"} class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < calculatedTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={currentPage >= calculatedTotalPages}>
             &gt;&gt;
           </a>
         </div>

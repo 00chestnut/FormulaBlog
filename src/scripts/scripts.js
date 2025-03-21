@@ -1,20 +1,20 @@
 export function decodeHTMLEntities(text) {
   if (!text) return '';
   return text
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&rsquo;/g, "'")
-    .replace(/&lsquo;/g, "'")
-    .replace(/&rdquo;/g, '"')
-    .replace(/&ldquo;/g, '"')
-    .replace(/&#8217;/g, "'")
-    .replace(/&#8216;/g, "'")
-    .replace(/&#8220;/g, '"')
-    .replace(/&#8221;/g, '"')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&#8211;/g, '-');
+    .replace(/"/g, '"')
+    .replace(/'/g, "'")
+    .replace(/'/g, "'")
+    .replace(/'/g, "'")
+    .replace(/"/g, '"')
+    .replace(/"/g, '"')
+    .replace(/'/g, "'")
+    .replace(/'/g, "'")
+    .replace(/"/g, '"')
+    .replace(/"/g, '"')
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/–/g, '-');
 }
 
 // Simple cache to avoid duplicate requests
@@ -53,6 +53,7 @@ export async function fetchPosts(page = 1, perPage = 100, categoryId = null) {
       return postCache.get(cacheKey);
     }
     
+    // Build the URL with _embed to get featured media and terms (categories, tags)
     let url = `http://maks.z0fil5dsgi-xlm41ok1r6dy.p.temp-site.link/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`;
     
     // Add category filter if provided
@@ -79,7 +80,7 @@ export async function fetchPosts(page = 1, perPage = 100, categoryId = null) {
       excerpt =
         excerpt.length > 120 ? excerpt.substring(0, 120) + "..." : excerpt;
       
-      // Get categories
+      // Get categories - ensure we always have an array even if the API response is unexpected
       const categories = post._embedded?.["wp:term"]?.[0]?.map(category => ({
         id: category.id,
         name: category.name,
