@@ -4,6 +4,8 @@ import "../../styles/global.css";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { fetchPosts, decodeHTMLEntities } from "../../scripts/scripts.js";
+import Card2 from "../../components/Card2.astro";
+import Cage from "../../components/Cage.astro";
 
 // This is required for dynamic routes in Astro
 export async function getStaticPaths() {
@@ -17,6 +19,12 @@ export async function getStaticPaths() {
 
 // Get the post directly from props since we're now passing the complete post object
 const { post } = Astro.props;
+
+const relatedPosts = await fetchPosts(1, 1); // First related post
+const relatedPostData = relatedPosts.length > 0 ? relatedPosts[0] : null;
+
+const relatedPosts2 = await fetchPosts(4, 1); // Second related post
+const relatedPostData2 = relatedPosts2.length > 0 ? relatedPosts2[0] : null;
 ---
 
 <html lang="en">
@@ -38,7 +46,7 @@ const { post } = Astro.props;
     <container>
       <Header />
       <main class="max-w-4xl mx-auto px-4 py-8 mb-[30rem]">
-        <article class="bg-whiterounded-lg shadow-md overflow-hidden pb-2">
+        <article class="darkbg bg-white rounded-lg shadow-2xl overflow-hidden pb-2">
           <!--@ts-ignore -->
           <img
             src={post.imageUrl}
@@ -47,12 +55,12 @@ const { post } = Astro.props;
           />
           <!--Image above title (could be replaced in the future with a local banner!) -->
 
-          <div class="darkbg p-6">
+          <div class="darkbg bg-white p-6 overflow-hidden">
             <h1
               class="whitetext text-3xl font-bold mb-2 text-gray-900 dark:text-white"
             >
               <!--@ts-ignore -->
-            <div hidden data-pagefind-meta="title">{decodeHTMLEntities(post.title)}</div>
+              <div hidden data-pagefind-meta="title">{decodeHTMLEntities(post.title)}</div>
               <!--@ts-ignore -->
               {decodeHTMLEntities(post.title)}
             </h1><!--@ts-ignore -->
@@ -68,6 +76,7 @@ const { post } = Astro.props;
             />
           </div>
         </article>
+
         <!-- Back to all posts link -->
         <div class="mt-6">
           <a
@@ -91,6 +100,43 @@ const { post } = Astro.props;
             Back to all posts
           </a>
         </div>
+        <br>
+        <div class="Dollop">Featured posts</div>
+        <br>
+  <!-- Featured posts -->
+<div class="mt-6">
+  <div class="flex flex-wrap justify-center gap-6">
+    <!-- First Related Post -->
+    {relatedPostData ? (
+      <Card2
+        picture={relatedPostData.imageUrl}
+        alt={decodeHTMLEntities(relatedPostData.title)}
+        name={decodeHTMLEntities(relatedPostData.title)}
+        desc={relatedPostData.description}
+        btn="Read More"
+        slug={relatedPostData.slug}
+      />
+    ) : (
+      <p>Related post not found.</p>
+    )}
+
+    <!-- Second Related Post -->
+    {relatedPostData2 ? (
+      <Card2
+        picture={relatedPostData2.imageUrl}
+        alt={decodeHTMLEntities(relatedPostData2.title)}
+        name={decodeHTMLEntities(relatedPostData2.title)}
+        desc={relatedPostData2.description}
+        btn="Read More"
+        slug={relatedPostData2.slug}
+      />
+    ) : (
+      <p>Related post not found.</p>
+    )}
+
+  </div>
+</div>
+
         <!--@ts-ignore -->
         <div
           class="Tags text-gray-400 dark:text-gray-500 text-xs object-bottom"
@@ -105,6 +151,24 @@ const { post } = Astro.props;
 </html>
 
 <style is:global>
+
+.Dollop {
+  display: flex;                s
+  justify-content: center;     
+  align-items: center;          
+  font-size:2rem;           
+  font-family:Formula, sans-serif;
+  color:hsla(0, 0%, 15%, 0.779);
+}
+.dark .Dollop{
+  color:hsla(0, 0%, 85%, 0.779);
+}
+
+@media (max-width: 640px) {
+  .Card2 
+    max-width: 100%;
+  }
+
   .Tags {
     gap: 20px;
   }

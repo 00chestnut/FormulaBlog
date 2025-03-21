@@ -45,7 +45,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, hsl(0, 100%, 24%), hsl(0, 100%, 23%));
+  background: linear-gradient(to right, hsla(345, 90%, 59%, 0.675), hsla(0, 94%, 24%, 0.829));
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   z-index: -1;
