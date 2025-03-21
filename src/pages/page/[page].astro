@@ -163,47 +163,39 @@ const isValidPage = currentPage <= filteredTotalPages;
           )}
         </Cage>
       
-        <!-- Pagination Controls -->
-        <div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
-          <!-- First page button -->
-          
-            href={`/${categoryId ? `?category=${categoryId}` : ''}`}
-            class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800"
-          >
-            &lt;&lt;
-          </a>
-  
-          <!-- Previous page button -->
-          
-            href={currentPage > 2 ? `/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ''}` : `/${categoryId ? `?category=${categoryId}` : ''}`}
-            class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800"
-          >
-            &lt;
-          </a>
-  
-          <!-- Page indicator -->
-          <span class="PageNumber px-3 py-2 font-medium mb-4">
-            Page {currentPage} of {filteredTotalPages}
-          </span>
-  
-          <!-- Next page button -->
-          
-            href={currentPage < filteredTotalPages ? `/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={currentPage >= filteredTotalPages}
-          >
-            &gt;
-          </a>
-  
-          <!-- Last page button -->
-          
-            href={filteredTotalPages > 1 ? `/page/${filteredTotalPages}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
-            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-            aria-disabled={currentPage >= filteredTotalPages}
-          >
-            &gt;&gt;
-          </a>
-        </div>
+       <!-- Pagination Controls -->
+<div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
+  <!-- First page button -->
+  <a href={`/${categoryId ? `?category=${categoryId}` : ''}`}
+     class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800">
+    &lt;&lt;
+  </a>
+
+  <!-- Previous page button -->
+  <a href={currentPage > 2 ? `/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ''}` : `/${categoryId ? `?category=${categoryId}` : ''}`}
+     class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800">
+    &lt;
+  </a>
+
+  <!-- Page indicator -->
+  <span class="PageNumber px-3 py-2 font-medium mb-4">
+    Page {currentPage} of {filteredTotalPages}
+  </span>
+
+  <!-- Next page button -->
+  <a href={currentPage < filteredTotalPages ? `/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
+     class={`px-3 py-2 mb-4 rounded-lg ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+     aria-disabled={currentPage >= filteredTotalPages}>
+    &gt;
+  </a>
+
+  <!-- Last page button -->
+  <a href={filteredTotalPages > 1 ? `/page/${filteredTotalPages}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
+     class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+     aria-disabled={currentPage >= filteredTotalPages}>
+    &gt;&gt;
+  </a>
+</div>
       </main>
       
       <Footer />
