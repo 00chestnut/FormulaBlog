@@ -18,7 +18,6 @@ const allPosts = await fetchPosts(1, 100, categoryId);
 const postsPerPage = 9; // posts per page limiter (keep this consistent with [page].astro)
 const firstPagePosts = allPosts.slice(0, postsPerPage);
 const totalPages = Math.ceil(allPosts.length / postsPerPage);
-
 export const prerender = true;
 ---
 
