@@ -7,11 +7,12 @@ import Card2 from "../../components/Card2.astro";
 import Cage from "../../components/Cage.astro";
 import SearchBar from "../../components/SearchBar.astro";
 import Filters from "../../components/Filters.astro"
-import { fetchPosts } from "../../scripts/scripts.js";
+import { fetchPosts} from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
+  // Get all posts without filtering for static generation
   const allPosts = await fetchPosts();
-  const postsPerPage = 3; // posts per page limiter
+  const postsPerPage = 9; // posts per page limiter
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
   // Create an array of page numbers starting from 2 (not 1)
@@ -19,7 +20,6 @@ export async function getStaticPaths() {
 
   // Return the paths for all pages except page 1
   return pages.map((page) => {
-    // Ensure correct slicing of posts per page
     const start = (page - 1) * postsPerPage;
     const end = start + postsPerPage;
     const pagePosts = allPosts.slice(start, end);
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
     return {
       params: { page: page.toString() },
       props: {
-        posts: pagePosts,
+        staticPosts: pagePosts,
         currentPage: page,
         totalPages,
         hasNextPage: page < totalPages,
@@ -37,8 +37,38 @@ export async function getStaticPaths() {
   });
 }
 
-const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
-  Astro.props;
+// Get props from static generation
+const { staticPosts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props;
+
+// Get the category ID from URL parameters if it exists
+const categoryId = Astro.url.searchParams.get('category') || null;
+
+// For client-side category filtering, fetch all posts with the category filter
+const filteredPosts = categoryId 
+//@ts-ignore
+  ? await fetchPosts(1, 100, categoryId)  // If category is selected, get filtered posts
+  : staticPosts;                           // Otherwise use static posts
+
+// Calculate pagination for the current set of posts
+const postsPerPage = 3;
+const filteredTotalPages = categoryId 
+  ? Math.ceil(filteredPosts.length / postsPerPage) 
+  : totalPages;
+
+// Get the correct page slice for display
+let currentPagePosts;
+if (categoryId) {
+  // When category is selected, we need to slice from the full filtered set
+  const start = (currentPage - 1) * postsPerPage;
+  const end = start + postsPerPage;
+  currentPagePosts = filteredPosts.slice(start, end);
+} else {
+  // When no category is selected, use the statically generated posts
+  currentPagePosts = staticPosts;
+}
+
+// Check if we're on a valid page for the current filter
+const isValidPage = currentPage <= filteredTotalPages;
 ---
 
 <html lang="en">
@@ -48,7 +78,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
     <meta charset="UTF-8" />
     <meta
       name="description"
-      content={`OnBoard - The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}
+      content={`OnBoard - The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${filteredTotalPages}.`}
     />
     <meta
       name="keywords"
@@ -62,7 +92,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
     />
     <meta
       property="og:description"
-      content={`The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${totalPages}.`}
+      content={`The latest news, insights and stories about Formula 1 racing. Page ${currentPage} of ${filteredTotalPages}.`}
     />
     <meta property="og:type" content="website" />
     <meta
@@ -73,8 +103,8 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
       rel="canonical"
       href={`https://your-website.com/page/${currentPage}`}
     />
-    {hasPrevPage && <link rel="prev" href={`/page/${currentPage - 1}`} />}
-    {hasNextPage && <link rel="next" href={`/page/${currentPage + 1}`} />}
+    {hasPrevPage && <link rel="prev" href={`/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ''}`} />}
+    {hasNextPage && <link rel="next" href={`/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ''}`} />}
     <title>OnBoard - Formula 1 - Page {currentPage}</title>
   </head>
   <body class="transition-colors duration-300 ease-in-out">
@@ -86,61 +116,96 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
           <div class="w-full mb-12">
             <SearchBar />
           </div>
-          {  
-            posts.length > 0 ? (
-            // @ts-ignore
-              posts.map((post) => (
-                <Card2
-                  picture={post.imageUrl}
-                  alt={post.title}
-                  name={post.title}
-                  desc={post.description}
-                  btn="Read more"
-                  slug={post.slug}
-                />
-              ))
-            ) : (
-              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                <h3 class="text-xl font-bold dark:text-white">No posts found - big problem</h3>
-                <br />
-                <p class="dark:text-gray-300">
-                  Please{" "}
-                  <a href="../../footerpages/contact" class="text-blue-500 bold hover:underline">
-                    contact
-                  </a>{" "}
-                  the site developer as soon as possible.
-                </p>
-                <br />
-                <br />
-                <div class="flex justify-center items-center">
-                  <img src="/images/shark.png" class="w-[15rem] h-[15rem] object-center" alt="Error shark" />
-                </div>
+          {!isValidPage ? (
+            <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <h3 class="text-xl font-bold dark:text-white">Page Not Found</h3>
+              <p class="mt-4 dark:text-gray-300">
+                This page doesn't exist for the selected category.
+              </p>
+              <div class="mt-6">
+                <a 
+                  href={`/${categoryId ? `?category=${categoryId}` : ''}`}
+                  class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800"
+                >
+                  Go to first page
+                </a>
               </div>
-            )
-          }
+            </div>
+          ) : currentPagePosts.length > 0 ? (
+            // @ts-ignore
+            currentPagePosts.map((post) => (
+              <Card2
+                picture={post.imageUrl}
+                alt={post.title}
+                name={post.title}
+                desc={post.description}
+                btn="Read more"
+                slug={post.slug}
+              />
+            ))
+          ) : (
+            <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <h3 class="text-xl font-bold dark:text-white">No posts found - big problem</h3>
+              <br />
+              <p class="dark:text-gray-300">
+                Please{" "}
+                <a href="../../footerpages/contact" class="text-blue-500 bold hover:underline">
+                  contact
+                </a>{" "}
+                the site developer as soon as possible.
+              </p>
+              <br />
+              <br />
+              <div class="flex justify-center items-center">
+                <img src="/images/shark.png" class="w-[15rem] h-[15rem] object-center" alt="Error shark" />
+              </div>
+            </div>
+          )}
         </Cage>
       
-        <!-- Wrapper to push pagination to the bottom -->
-        <div class="flex-grow"></div> 
-      
-        <div class="pagination-container py-4">
-          <div class="pagination flex justify-center items-center my-4 gap-2 px-4">
-            <a href="../" class={`px-3 py-2 rounded-lg ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasPrevPage}>&lt;&lt;</a>
-      
-            <a href={currentPage === 2 ? "../" : `/page/${currentPage - 1}`} class={`px-3 py-2 rounded-lg ${hasPrevPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasPrevPage}>&lt;</a>
-      
-            <span class="PageNumber px-3 py-2 font-medium dark:text-white">
-              Page {currentPage} of {totalPages}
-            </span>
-      
-            <a href={hasNextPage ? `/page/${currentPage + 1}` : "#"} class={`px-3 py-2 rounded-lg ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasNextPage}>&gt;</a>
-      
-            <a href={`/page/${totalPages}`} class={`px-3 py-2 rounded-lg ${hasNextPage ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`} aria-disabled={!hasNextPage}>&gt;&gt;</a>
-          </div>
+        <!-- Pagination Controls -->
+        <div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
+          <!-- First page button -->
+          
+            href={`/${categoryId ? `?category=${categoryId}` : ''}`}
+            class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800"
+          >
+            &lt;&lt;
+          </a>
+  
+          <!-- Previous page button -->
+          
+            href={currentPage > 2 ? `/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ''}` : `/${categoryId ? `?category=${categoryId}` : ''}`}
+            class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800"
+          >
+            &lt;
+          </a>
+  
+          <!-- Page indicator -->
+          <span class="PageNumber px-3 py-2 font-medium mb-4">
+            Page {currentPage} of {filteredTotalPages}
+          </span>
+  
+          <!-- Next page button -->
+          
+            href={currentPage < filteredTotalPages ? `/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
+            class={`px-3 py-2 mb-4 rounded-lg ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={currentPage >= filteredTotalPages}
+          >
+            &gt;
+          </a>
+  
+          <!-- Last page button -->
+          
+            href={filteredTotalPages > 1 ? `/page/${filteredTotalPages}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
+            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={currentPage >= filteredTotalPages}
+          >
+            &gt;&gt;
+          </a>
         </div>
       </main>
       
-      </main>
       <Footer />
     </container>
     

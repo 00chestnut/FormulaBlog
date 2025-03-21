@@ -7,11 +7,15 @@ import Card2 from "../components/Card2.astro";
 import Cage from "../components/Cage.astro";
 import SearchBar from "../components/SearchBar.astro";
 import Filters from "../components/Filters.astro"
-import { fetchPosts } from "../scripts/scripts.js";
+import { fetchPosts, fetchCategories } from "../scripts/scripts.js";
 
-// Fetch posts from WordPress
-const allPosts = await fetchPosts();
-const postsPerPage = 3; // posts per page limiter (keep this consistent with [page].astro)
+// Get the category ID from URL parameters if it exists
+const categoryId = Astro.url.searchParams.get('category') || null;
+
+// Fetch posts from WordPress (with category filter if present)
+//@ts-ignore
+const allPosts = await fetchPosts(1, 100, categoryId);
+const postsPerPage = 9; // posts per page limiter (keep this consistent with [page].astro)
 const firstPagePosts = allPosts.slice(0, postsPerPage);
 const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
@@ -123,7 +127,7 @@ export const prerender = true;
 
           <!-- Next page button -->
           <a
-            href={totalPages > 1 ? `/page/2` : "#"}
+            href={totalPages > 1 ? `/page/2${categoryId ? `?category=${categoryId}` : ''}` : "#"}
             class={`px-3 py-2 mb-4 rounded-lg ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={totalPages <= 1}
           >
@@ -132,7 +136,7 @@ export const prerender = true;
 
           <!-- Last page button -->
           <a
-            href={totalPages > 1 ? `/page/${totalPages}` : "#"}
+            href={totalPages > 1 ? `/page/${totalPages}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
             class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${totalPages > 1 ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
             aria-disabled={totalPages <= 1}
           >
@@ -143,7 +147,6 @@ export const prerender = true;
     </container>
 
     <style is:global>
-      /* Add transition for all elements */
       * {
         transition-property: background-color, border-color, color, fill, stroke;
         transition-duration: 100ms;

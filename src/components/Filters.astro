@@ -1,52 +1,83 @@
 ---
+import { fetchCategories } from "../scripts/scripts.js";
+
+// Get the category from URL parameters or set default
+const selectedCategoryId = Astro.url.searchParams.get('category') || null;
+
+// Fetch categories
+const categories = await fetchCategories();
+
+// Sort categories to ensure Formula 1 is first if it exists
+const sortedCategories = [...categories].sort((a, b) => {
+  if (a.name === "Formula 1") return -1;
+  if (b.name === "Formula 1") return 1;
+  return a.name.localeCompare(b.name);
+});
+
+// Get current URL path for maintaining pagination if present
+const currentPath = Astro.url.pathname;
+// Extract page number if we're on a pagination page
+const pageMatch = currentPath.match(/\/page\/(\d+)/);
+// For category links, always go back to page 1 when changing category
+const basePath = currentPath.startsWith('/page/') ? '/page/1' : '/';
+// Root path for "All Categories" link should go to the homepage
+const rootPath = '/';
 ---
 
 <div class="relative inline-block">
-    <button id="dropdownButton" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-      Filter post categories
-      <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-      </svg>
-    </button>
-  
-    <div id="dropdown" class="absolute left-0 mt-2 z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-44 dark:bg-gray-700 transition-colors duration-10 ease-in-out">
-      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Formula 1</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drivers</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Teams</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">News</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tech</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Stories</a></li>
-      </ul>
-    </div>
+  <button id="dropdownButton" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+    Filter post categories
+    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+    </svg>
+  </button>
+
+  <div id="dropdown" class="absolute left-0 mt-2 z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-44 dark:bg-gray-700 transition-colors duration-10 ease-in-out">
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+      <li>
+        <a href={rootPath} class={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${!selectedCategoryId ? 'bg-gray-100 dark:bg-gray-600' : ''}`}>
+          All Categories
+        </a>
+      </li>
+      {sortedCategories.map(category => (
+        <li>
+          <a 
+            href={`${basePath}?category=${category.id}`} 
+            class={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${selectedCategoryId == category.id ? 'bg-gray-100 dark:bg-gray-600' : ''}`}
+          >
+            {category.name} ({category.count})
+          </a>
+        </li>
+      ))}
+    </ul>
   </div>
-  
-  
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      const button = document.getElementById("dropdownButton");
-      const dropdown = document.getElementById("dropdown");
-  
-      button.addEventListener("click", () => {
-        dropdown.classList.toggle("hidden");
-      });
-  
-      document.addEventListener("click", (event) => {
-        if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-          dropdown.classList.add("hidden");
-        }
-      });
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("dropdownButton");
+    const dropdown = document.getElementById("dropdown");
+
+    button.addEventListener("click", () => {
+      dropdown.classList.toggle("hidden");
     });
-  </script>
-  
+
+    document.addEventListener("click", (event) => {
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+  });
+</script>
+
 <style>
-#dropdownButton{
+  #dropdownButton{
     transition: none !important; 
     margin-left: 7rem;
-    
-}
-    #dropdown {
-  transition: none !important; 
-  margin-left: 7rem;
-}
+  }
+  
+  #dropdown {
+    transition: none !important; 
+    margin-left: 7rem;
+  }
 </style>
