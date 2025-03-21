@@ -20,41 +20,66 @@ const currentPath = Astro.url.pathname;
 // Determine if we are in a category route
 const inCategoryRoute = currentPath.startsWith('/category/');
 
-// Determine the base path for pagination
-//@ts-ignore
-const currentPage = currentPath.match(/\/page\/(\d+)/) ? 
-//@ts-ignore
-  parseInt(currentPath.match(/\/page\/(\d+)/)[1]) : 1;
---- 
+// Find the selected category name
+const selectedCategory = sortedCategories.find(cat => 
+  selectedCategoryId == cat.id || (inCategoryRoute && currentPath.includes(`/category/${cat.slug}`))
+);
 
-<div class="filtercomponent mb-12">
-  <label for="categoryFilter" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">
-    Filter post categories
-  </label>
-  
-  <div class="relative">
-    <!--@ts-ignore -->
-    <select
-      id="categoryFilter"
-      onChange="window.location.href=this.value"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
-    >
-      <option value="/">
-        All Categories
-      </option>
-      {sortedCategories.map(category => {
-        // Always use the path-based approach for consistent behavior
-        const href = `/category/${category.slug}`;
-        
-        return (
-          <option 
-            value={href} 
-            selected={selectedCategoryId == category.id || (inCategoryRoute && currentPath.includes(`/category/${category.slug}`))}
+// Set the button label (default to "All Categories" if none selected)
+const selectedCategoryName = selectedCategory ? `${selectedCategory.name} (${selectedCategory.count})` : "All Categories";
+---
+
+<div class="filtercomponent mb-12 relative">
+  <!-- Dropdown Button -->
+  <button 
+    id="dropdownDefaultButton" 
+    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full"
+    type="button"
+  >
+    {selectedCategoryName}
+    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+    </svg>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div id="dropdown" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-full dark:bg-gray-700 absolute mt-2">
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+      <li>
+        <a href="/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+          All Categories
+        </a>
+      </li>
+      {sortedCategories.map(category => (
+        <li>
+          <a 
+            href={`/category/${category.slug}`} 
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             {category.name} ({category.count})
-          </option>
-        );
-      })}
-    </select>
+          </a>
+        </li>
+      ))}
+    </ul>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdownButton = document.getElementById("dropdownDefaultButton");
+    const dropdownMenu = document.getElementById("dropdown");
+//@ts-ignore
+    dropdownButton.addEventListener("click", function () {
+        //@ts-ignore
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", function (event) {
+        //@ts-ignore
+      if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        //@ts-ignore
+        dropdownMenu.classList.add("hidden");
+      }
+    });
+  });
+</script>

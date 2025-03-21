@@ -6,8 +6,8 @@ import Footer from "../../components/Footer.astro";
 import Card2 from "../../components/Card2.astro";
 import Cage from "../../components/Cage.astro";
 import SearchBar from "../../components/SearchBar.astro";
-import Filters from "../../components/Filters.astro"
-import { fetchPosts} from "../../scripts/scripts.js";
+import Filters from "../../components/Filters.astro";
+import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
   // Get all posts without filtering for static generation
@@ -38,21 +38,22 @@ export async function getStaticPaths() {
 }
 
 // Get props from static generation
-const { staticPosts, currentPage, totalPages, hasNextPage, hasPrevPage } = Astro.props;
+const { staticPosts, currentPage, totalPages, hasNextPage, hasPrevPage } =
+  Astro.props;
 
 // Get the category ID from URL parameters if it exists
-const categoryId = Astro.url.searchParams.get('category') || null;
+const categoryId = Astro.url.searchParams.get("category") || null;
 
 // For client-side category filtering, fetch all posts with the category filter
-const filteredPosts = categoryId 
-//@ts-ignore
-  ? await fetchPosts(1, 100, categoryId)  // If category is selected, get filtered posts
-  : staticPosts;                           // Otherwise use static posts
+const filteredPosts = categoryId
+  ? //@ts-ignore
+    await fetchPosts(1, 100, categoryId) // If category is selected, get filtered posts
+  : staticPosts; // Otherwise use static posts
 
 // Calculate pagination for the current set of posts
 const postsPerPage = 3;
-const filteredTotalPages = categoryId 
-  ? Math.ceil(filteredPosts.length / postsPerPage) 
+const filteredTotalPages = categoryId
+  ? Math.ceil(filteredPosts.length / postsPerPage)
   : totalPages;
 
 // Get the correct page slice for display
@@ -103,8 +104,22 @@ const isValidPage = currentPage <= filteredTotalPages;
       rel="canonical"
       href={`https://your-website.com/page/${currentPage}`}
     />
-    {hasPrevPage && <link rel="prev" href={`/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ''}`} />}
-    {hasNextPage && <link rel="next" href={`/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ''}`} />}
+    {
+      hasPrevPage && (
+        <link
+          rel="prev"
+          href={`/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ""}`}
+        />
+      )
+    }
+    {
+      hasNextPage && (
+        <link
+          rel="next"
+          href={`/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ""}`}
+        />
+      )
+    }
     <title>OnBoard - Formula 1 - Page {currentPage}</title>
   </head>
   <body class="transition-colors duration-300 ease-in-out">
@@ -116,91 +131,120 @@ const isValidPage = currentPage <= filteredTotalPages;
           <div class="w-full mb-12">
             <SearchBar />
           </div>
-          {!isValidPage ? (
-            <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <h3 class="text-xl font-bold dark:text-white">Page Not Found</h3>
-              <p class="mt-4 dark:text-gray-300">
-                This page doesn't exist for the selected category.
-              </p>
-              <div class="mt-6">
-                <a 
-                  href={`/${categoryId ? `?category=${categoryId}` : ''}`}
-                  class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800"
-                >
-                  Go to first page
-                </a>
+          {
+            !isValidPage ? (
+              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h3 class="text-xl font-bold dark:text-white">
+                  Page Not Found
+                </h3>
+                <p class="mt-4 dark:text-gray-300">
+                  This page doesn't exist for the selected category.
+                </p>
+                <div class="mt-6">
+                  <a
+                    href={`/${categoryId ? `?category=${categoryId}` : ""}`}
+                    class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800"
+                  >
+                    Go to first page
+                  </a>
+                </div>
               </div>
-            </div>
-          ) : currentPagePosts.length > 0 ? (
-            // @ts-ignore
-            currentPagePosts.map((post) => (
-              <Card2
-                picture={post.imageUrl}
-                alt={post.title}
-                name={post.title}
-                desc={post.description}
-                btn="Read more"
-                slug={post.slug}
-              />
-            ))
-          ) : (
-            <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <h3 class="text-xl font-bold dark:text-white">No posts found - big problem</h3>
-              <br />
-              <p class="dark:text-gray-300">
-                Please{" "}
-                <a href="../../footerpages/contact" class="text-blue-500 bold hover:underline">
-                  contact
-                </a>{" "}
-                the site developer as soon as possible.
-              </p>
-              <br />
-              <br />
-              <div class="flex justify-center items-center">
-                <img src="/images/shark.png" class="w-[15rem] h-[15rem] object-center" alt="Error shark" />
+            ) : currentPagePosts.length > 0 ? (
+              // @ts-ignore
+              currentPagePosts.map((post) => (
+                <Card2
+                  picture={post.imageUrl}
+                  alt={post.title}
+                  name={post.title}
+                  desc={post.description}
+                  btn="Read more"
+                  slug={post.slug}
+                />
+              ))
+            ) : (
+              <div class="text-center p-8 bg-white-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h3 class="text-xl font-bold dark:text-white">
+                  No posts found - big problem
+                </h3>
+                <br />
+                <p class="dark:text-gray-300">
+                  Please{" "}
+                  <a
+                    href="../../footerpages/contact"
+                    class="text-blue-500 bold hover:underline"
+                  >
+                    contact
+                  </a>{" "}
+                  the site developer as soon as possible.
+                </p>
+                <br />
+                <br />
+                <div class="flex justify-center items-center">
+                  <img
+                    src="/images/shark.png"
+                    class="w-[15rem] h-[15rem] object-center"
+                    alt="Error shark"
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }
         </Cage>
-      
-       <!-- Pagination Controls -->
-<div class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4">
-  <!-- First page button -->
-  <a href={`/${categoryId ? `?category=${categoryId}` : ''}`}
-     class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800">
-    &lt;&lt;
-  </a>
 
-  <!-- Previous page button -->
-  <a href={currentPage > 2 ? `/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ''}` : `/${categoryId ? `?category=${categoryId}` : ''}`}
-     class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800">
-    &lt;
-  </a>
+        <!-- Pagination Controls -->
+        <div
+          class="pagination flex flex-wrap justify-center items-center my-4 md:my-8 gap-2 px-4"
+        >
+          <!-- First page button -->
+          <a
+            href={`/${categoryId ? `?category=${categoryId}` : ""}`}
+            class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800"
+          >
+            &lt;&lt;
+          </a>
 
-  <!-- Page indicator -->
-  <span class="PageNumber px-3 py-2 font-medium mb-4">
-    Page {currentPage} of {filteredTotalPages}
-  </span>
+          <!-- Previous page button -->
+          <a
+            href={currentPage > 2
+              ? `/page/${currentPage - 1}${categoryId ? `?category=${categoryId}` : ""}`
+              : `/${categoryId ? `?category=${categoryId}` : ""}`}
+            class="px-3 py-2 rounded-lg mb-4 bg-red-700 text-white hover:bg-red-800"
+          >
+            &lt;
+          </a>
 
-  <!-- Next page button -->
-  <a href={currentPage < filteredTotalPages ? `/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
-     class={`px-3 py-2 mb-4 rounded-lg ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-     aria-disabled={currentPage >= filteredTotalPages}>
-    &gt;
-  </a>
+          <!-- Page indicator -->
+          <span class="PageNumber px-3 py-2 font-medium mb-4">
+            Page {currentPage} of {filteredTotalPages}
+          </span>
 
-  <!-- Last page button -->
-  <a href={filteredTotalPages > 1 ? `/page/${filteredTotalPages}${categoryId ? `?category=${categoryId}` : ''}` : "#"}
-     class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-     aria-disabled={currentPage >= filteredTotalPages}>
-    &gt;&gt;
-  </a>
-</div>
+          <!-- Next page button -->
+          <a
+            href={currentPage < filteredTotalPages
+              ? `/page/${currentPage + 1}${categoryId ? `?category=${categoryId}` : ""}`
+              : "#"}
+            class={`px-3 py-2 mb-4 rounded-lg ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={currentPage >= filteredTotalPages}
+          >
+            &gt;
+          </a>
+
+          <!-- Last page button -->
+          <a
+            href={filteredTotalPages > 1
+              ? `/page/${filteredTotalPages}${categoryId ? `?category=${categoryId}` : ""}`
+              : "#"}
+            class={`px-3 py-2 mb-4 rounded-lg transition-colors duration-300 ease-in-out ${currentPage < filteredTotalPages ? "bg-red-700 text-white hover:bg-red-800" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            aria-disabled={currentPage >= filteredTotalPages}
+          >
+            &gt;&gt;
+          </a>
+        </div>
       </main>
-      
+
       <Footer />
     </container>
-    
+
     <style is:global>
       * {
         transition-property: background-color, border-color, color, fill, stroke;
