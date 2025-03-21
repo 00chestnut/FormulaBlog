@@ -6,6 +6,7 @@ import Footer from "../components/Footer.astro";
 import Card2 from "../components/Card2.astro";
 import Cage from "../components/Cage.astro";
 import SearchBar from "../components/SearchBar.astro";
+import Filters from "../components/Filters.astro"
 import { fetchPosts } from "../scripts/scripts.js";
 
 // Fetch posts from WordPress
@@ -47,6 +48,7 @@ export const prerender = true;
       <Header />
       <main class="transition-colors duration-300 ease-in-out">
         <Cage>
+          <Filters />
           <div class="w-full mb-12">
             <SearchBar />
           </div>
@@ -144,7 +146,7 @@ export const prerender = true;
       /* Add transition for all elements */
       * {
         transition-property: background-color, border-color, color, fill, stroke;
-        transition-duration: 1s;
+        transition-duration: 100ms;
         transition-timing-function: ease-in-out;
       }
     </style>

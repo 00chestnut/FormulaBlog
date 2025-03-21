@@ -6,6 +6,7 @@ import Footer from "../../components/Footer.astro";
 import Card2 from "../../components/Card2.astro";
 import Cage from "../../components/Cage.astro";
 import SearchBar from "../../components/SearchBar.astro";
+import Filters from "../../components/Filters.astro"
 import { fetchPosts } from "../../scripts/scripts.js";
 
 export async function getStaticPaths() {
@@ -81,6 +82,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } =
       <Header />
       <main class="flex flex-col flex-grow min-h-screen">
         <Cage>
+          <Filters />
           <div class="w-full mb-12">
             <SearchBar />
           </div>

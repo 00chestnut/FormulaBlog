@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "flowbite/src/themes/default";
 
+
 /* Fonts */
 @font-face {
   font-family: "Formula";
@@ -280,7 +281,6 @@ background-color:#ad2e2e;
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  justify-content: center;
   max-width: 1200px;
   margin: 0 auto;
   padding-left: 30px;

@@ -1,0 +1,52 @@
+---
+---
+
+<div class="relative inline-block">
+    <button id="dropdownButton" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+      Filter post categories
+      <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+      </svg>
+    </button>
+  
+    <div id="dropdown" class="absolute left-0 mt-2 z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-44 dark:bg-gray-700 transition-colors duration-10 ease-in-out">
+      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Formula 1</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drivers</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Teams</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">News</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tech</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Stories</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      const button = document.getElementById("dropdownButton");
+      const dropdown = document.getElementById("dropdown");
+  
+      button.addEventListener("click", () => {
+        dropdown.classList.toggle("hidden");
+      });
+  
+      document.addEventListener("click", (event) => {
+        if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.classList.add("hidden");
+        }
+      });
+    });
+  </script>
+  
+<style>
+#dropdownButton{
+    transition: none !important; 
+    margin-left: 7rem;
+    
+}
+    #dropdown {
+  transition: none !important; 
+  margin-left: 7rem;
+}
+</style>
