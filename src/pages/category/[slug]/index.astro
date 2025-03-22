@@ -5,12 +5,12 @@ import Header from "../../../components/Header.astro";
 import Footer from "../../../components/Footer.astro";
 import Card2 from "../../../components/Card2.astro";
 import Cage from "../../../components/Cage.astro";
-import SearchBar from "../../../components/SearchBar.astro";
+import SearchBar from "../../../components/searchbar.astro";
 import Filters from "../../../components/Filters.astro";
 import { fetchPosts, fetchCategories } from "../../../scripts/scripts.js";
 
 // Posts per page for category pages
-const postsPerPage = 9;
+const postsPerPage = 3;
 
 // Generate static paths for all category index pages (page 1)
 export async function getStaticPaths() {

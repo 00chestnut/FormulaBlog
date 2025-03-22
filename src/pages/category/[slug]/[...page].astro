@@ -1,24 +1,23 @@
 ---
-// src/pages/category/
+// src/pages/category/[slug]/[...page].astro
 import "../../../styles/global.css";
 import Header from "../../../components/Header.astro";
 import Footer from "../../../components/Footer.astro";
 import Card2 from "../../../components/Card2.astro";
 import Cage from "../../../components/Cage.astro";
-import SearchBar from "../../../components/SearchBar.astro";
+import SearchBar from "../../../components/searchbar.astro";
 import Filters from "../../../components/Filters.astro";
 import { fetchPosts, fetchCategories, decodeHTMLEntities } from "../../../scripts/scripts.js";
 
-// Posts per page for category pages
-const postsPerPage = 9;
+// Define the constant OUTSIDE of any function so it's available everywhere
+const POSTS_PER_PAGE = 3;
 
 // Generate static paths for paginated category pages (for page 2 and up)
-// (The category index page at src/pages/category/[slug]/index.astro handles page 1.)
 export async function getStaticPaths() {
   // Fetch all categories and posts from WordPress
   const categories = await fetchCategories();
   const allPosts = await fetchPosts();
-
+  const POSTS_PER_PAGE = 3;
   const paths = [];
   for (const cat of categories) {
     // Filter posts that belong to this category (using the category slug provided)
@@ -28,21 +27,21 @@ export async function getStaticPaths() {
       post.categories.some(c => c.slug === cat.slug)
     );
     const totalPosts = categoryPosts.length;
-    const totalPages = Math.ceil(totalPosts / postsPerPage);
+    const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
     // Generate paths only for page 2 and beyond
     for (let page = 2; page <= totalPages; page++) {
       paths.push({
-        params: { slug: cat.slug, page: [page.toString()] },
+        params: { slug: cat.slug, page: page.toString() }, // Fixed: using string instead of array
         props: { categoryId: cat.id, categoryName: cat.name, totalPages }
       });
     }
   }
   return paths;
 }
-
 // Get route parameters and props
 const { slug, page } = Astro.params;
-const currentPage = parseInt(page?.[0] || "2"); // this file handles pages 2+
+// Since page parameter is now a string, not an array
+const currentPage = parseInt(page || "1");
 const { categoryId, categoryName, totalPages } = Astro.props;
 
 // Fetch all categories to get the current category details if not provided via props
@@ -70,10 +69,10 @@ const categoryPosts = posts.filter(post =>
 );
 
 // Calculate pagination
-const start = (currentPage - 1) * postsPerPage;
-const end = start + postsPerPage;
+const start = (currentPage - 1) * POSTS_PER_PAGE;
+const end = start + POSTS_PER_PAGE;
 const currentPagePosts = categoryPosts.slice(start, end);
-const calculatedTotalPages = Math.ceil(categoryPosts.length / postsPerPage);
+const calculatedTotalPages = Math.ceil(categoryPosts.length / POSTS_PER_PAGE);
 
 // Validate that the current page is within range
 const isValidPage = currentPage >= 1 && currentPage <= calculatedTotalPages;

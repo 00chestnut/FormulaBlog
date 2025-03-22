@@ -5,7 +5,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Card2 from "../components/Card2.astro";
 import Cage from "../components/Cage.astro";
-import SearchBar from "../components/SearchBar.astro";
+import SearchBar from "../components/searchbar.astro";
 import Filters from "../components/Filters.astro"
 import { fetchPosts, fetchCategories } from "../scripts/scripts.js";
 
@@ -15,7 +15,7 @@ const categoryId = Astro.url.searchParams.get('category') || null;
 // Fetch posts from WordPress (with category filter if present)
 //@ts-ignore
 const allPosts = await fetchPosts(1, 100, categoryId);
-const postsPerPage = 9; // posts per page limiter (keep this consistent with [page].astro)
+const postsPerPage = 3; // posts per page limiter (keep this consistent with [page].astro)
 const firstPagePosts = allPosts.slice(0, postsPerPage);
 const totalPages = Math.ceil(allPosts.length / postsPerPage);
 export const prerender = true;
@@ -67,7 +67,6 @@ export const prerender = true;
                   btn="Read more"
                   slug={post.slug}
                 />
-                <Card2 />
               ))
             ) : (
               <div class="error text-center p-8 bg-gray-100 border-gray-200 rounded-lg shadow-sm">
